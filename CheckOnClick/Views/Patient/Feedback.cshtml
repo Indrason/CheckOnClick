@@ -1,0 +1,65 @@
+﻿
+@{
+    ViewBag.Title = "Feedback";
+    Layout = "~/Views/Shared/_LayoutPatient.cshtml";
+}
+
+<div class="forms">
+    <div class="form-grids row widget-shadow" data-example-id="basic-forms">
+        <div class="form-title">
+            <h4>Feedback</h4>
+        </div>
+        <div class="form-body">
+            <form>
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label for="docDept">Department</label>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" id="docDept" name="docDept" placeholder="Enter Department Name">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label for="docName">Doctor Name</label>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" id="docName" name="docName" placeholder="Enter Doctor Name">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label for="feedBack">Feedback</label>
+                        </div>
+                        <div class="col-md-6">
+                            <textarea class="form-control" rows="5" id="feedBack" name="feedBack" placeholder="Enter Feedback"></textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label for="feedBack">Rating</label>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="radio" name="rating" value="1" id="fsd"> <label for="fsd">Strongly Disagree</label> &nbsp;
+                            <input type="radio" name="rating" value="2" id="fdg"> <label for="fdg">Disagree</label> &nbsp;
+                            <input type="radio" name="rating" value="3" id="favg"> <label for="favg">Average</label> &nbsp;
+                            <input type="radio" name="rating" value="4" id="fag"> <label for="fag">Agree</label> &nbsp;
+                            <input type="radio" name="rating" value="5" id="fsa"> <label for="fsa">Strongly</label> Agree
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 center-block">
+                            <button class="btn btn-success form-control center-block" type="submit" name="btnFeed">Submit</button>
+                        </div>
+                    </div>
+                </div>
+
+
+            </form>
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewBag.Title = "Fresh Appointment";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="form-grids row widget-shadow" data-example-id="basic-forms">
+    <div class="form-title">
+        <h4>Fresh Appointments</h4>
+    </div>
+    <div class="form-body">
+        <div class="table-responsive">
+            <table class="table" id="table_appoint">
+                <thead class="bg-info">
+                    <tr>
+                        <td>Appointment ID</td>
+                        <td>Doctor Name</td>
+                        <td>Patient Name</td>
+                        <td>Appointment Date</td>
+                        <td>Appointment Description</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Dr. Patro</td>
+                        <td>Mr. Gana</td>
+                        <td>24/02/2018 16:00:00</td>
+                        <td>Strong Fever</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#table_appoint").DataTable();
+    });
+</script>

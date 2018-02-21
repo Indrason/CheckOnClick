@@ -1,0 +1,182 @@
+﻿
+@{
+    ViewBag.Title = "Profile";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="form-grids row widget-shadow" data-example-id="basic-forms">
+    <div class="form-title">
+        <h4>My Profile</h4>
+    </div>
+    <div class="form-body">
+
+        <form method="post">
+
+        <div class="row form-group">
+            <div class="col-md-2">
+                <label for="admin_fullName">Full Name</label>
+            </div>
+            <div class="col-md-8">
+                <input type="text" id="admin_fullName" name="admin_fullName" class="form-control" placeholder="Full Name" disabled />
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-md-2">
+                <label for="admin_userName">User Name</label>
+            </div>
+            <div class="col-md-8">
+                <input type="text" id="admin_userName" name="admin_userName" class="form-control" placeholder="User Name" disabled />
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-md-2">
+                <label for="admin_email">Email</label>
+            </div>
+            <div class="col-md-8">
+                <input type="email" id="admin_email" name="admin_email" class="form-control" placeholder="Email" disabled />
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-md-2">
+                <label for="admin_contact">Contact Number</label>
+            </div>
+            <div class="col-md-8">
+                <input type="text" id="admin_contact" name="admin_contact" class="form-control" placeholder="Contact Number" disabled />
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-md-2">
+                <label for="admin_dob">Date of Birth</label>
+            </div>
+            <div class="col-md-8">
+                <input type="date" id="admin_dob" name="admin_dob" class="form-control" placeholder="Date of Birth" disabled />
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-md-2">
+                <label for="admin_addCity">Address: City</label>
+            </div>
+            <div class="col-md-3">
+                <input type="text" id="admin_addCity" name="admin_addCity" class="form-control" placeholder="City" disabled />
+            </div>
+            <div class="col-md-2">
+                <label for="admin_addState">State</label>
+            </div>
+            <div class="col-md-3">
+                <input type="text" id="admin_addState" name="admin_addState" class="form-control" placeholder="State" disabled />
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-md-2">
+                <label for="admin_addCountry">Country</label>
+            </div>
+            <div class="col-md-3">
+                <input type="text" id="admin_addCountry" name="admin_addCountry" class="form-control" placeholder="Country" disabled />
+            </div>
+            <div class="col-md-2">
+                <label for="admin_addPin">Pin</label>
+            </div>
+            <div class="col-md-3">
+                <input type="number" id="admin_addPin" name="admin_addPin" class="form-control" placeholder="Pin" disabled />
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-md-4" id="edit_div">
+                <button type="button" class="btn btn-block btn-primary" name="admin_profile_edit" id="admin_profile_edit"><i class="fa fa-edit"></i> Edit Profile</button>
+            </div>
+            <div class="col-md-4" id="save_div">
+                <button type="submit" class="btn btn-block btn-success" name="admin_profile_update" id="admin_profile_update"><i class="fa fa-check"></i> Save Changes</button>
+            </div>
+            <div class="col-md-4">
+                <button type="button" class="btn btn-block btn-primary" name="admin_password_edit" id="admin_password_edit" data-toggle="modal" data-target="#edit_Password"><i class="fa fa-edit"></i> Change Password</button>
+            </div>
+        </div>
+
+      </form>
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="edit_Password" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Change Password</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        
+                        <form method="post" action="#">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="cur_password">Current Password</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="password" name="cur_password" id="cur_password" class="form-control" placeholder="Current Password" />
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="new_password">New Password</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="password" name="new_password" id="new_password" class="form-control" placeholder="New Password" />
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="retype_password">Current Password</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="password" name="retype_password" id="retype_password" class="form-control" placeholder="Re-Type Password" />
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <button type="submit" name="update_password" id="update_password" class="btn btn-success form-control"><i class="fa fa-check"></i> Change Password</button>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+  <!--                  <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>  -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Close    -->
+
+
+    </div>
+
+</div>
+
+<script>
+
+    $("#save_div").hide();
+    $("#admin_profile_edit").click(function () {
+        $("#edit_div").hide();
+        $("#save_div").show();
+
+        $("#admin_fullName").removeAttr("disabled");
+        $("#admin_contact").removeAttr("disabled");
+        $("#admin_addCity").removeAttr("disabled");
+        $("#admin_addState").removeAttr("disabled");
+        $("#admin_addCountry").removeAttr("disabled");
+        $("#admin_addPin").removeAttr("disabled");
+    });
+</script>
