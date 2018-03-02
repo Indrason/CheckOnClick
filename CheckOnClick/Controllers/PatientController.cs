@@ -11,26 +11,50 @@ namespace CheckOnClick.Controllers
         // GET: Patient
         public ActionResult Index()
         {
+            if (Session["PatientUserName"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 
+        // Appointment Page
         public ActionResult Appointment()
         {
+            if (Session["PatientUserName"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 
+        // Profile Page
         public new ActionResult Profile()
         {
+            if (Session["PatientUserName"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 
+        // Appointment History Page
         public ActionResult AppointHistory()
         {
+            if (Session["PatientUserName"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 
+        // Feedback Page
         public ActionResult Feedback()
         {
+            if (Session["PatientUserName"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
     }

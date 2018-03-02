@@ -1,4 +1,5 @@
-﻿@{
+﻿@model CheckOnClick.Models.Roles
+@{
     ViewBag.Title = "Roles";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
@@ -16,20 +17,11 @@
                     <tr>
                         <td>Role ID</td>
                         <td>Role Name</td>
-                        <td>Action</td>
+                        <td>Active</td>
 
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Doctor</td>
-                        <td>
-                            <button type="button" class="btn  btn-danger" name="admin_add_specialization_role"><i class="fa fa-times"></i> Remove</button>
-                        </td>
-
-                    </tr>
-                </tbody>
+                <tbody id="roleBody"></tbody>
             </table>
         </div>
         .
@@ -51,19 +43,21 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="row form-group">
-                            <div class="col-md-4">
-                                <label class="control-label">Enter Role Name</label>
-                            </div>  
-                            <div class="col-md-6">
-                                <input type="text" class="form-control" name="rolename" value="" placeholder="Enter Role Name" />
+                        <form>
+                            <div class="row form-group">
+                                <div class="col-md-4">
+                                    <label class="control-label">Enter Role Name</label>
+                                </div>
+                                <div class="col-md-6">
+                                    @Html.TextBoxFor(a => a.NewRole_Name, new { @class = "form-control", @placeholder = "Role Name" })
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <button type="button" class="btn btn-primary">Add Role</button>
-                            </div>               
-                        </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <button type="button" id="saveRole" class="btn btn-primary">Add Role</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -71,11 +65,63 @@
             <!-- Modal Close-->
         </div>
 
-        </div>
     </div>
+</div>
 
-    <script>
-        $(document).ready(function () {
-            $("#table_roles").DataTable();
+<script>
+
+    // Display roles in the DataTables
+    $(document).ready(function () {
+        $("#table_roles").DataTable({
+            "ajax": {
+                type: "GET",
+                url: "/Admin/ShowRole",
+                dataType: "json",
+                contentType: "application/json"
+            },
+            "columns": [
+                { "data": "Role_ID" },
+                { "data": "Role_Name" },
+                { "data": "Active" },
+            ]
+
         });
-    </script>
+    });
+
+    // Action when we click Save Role Button
+    $('#saveRole').click(function () {
+        if ($('#NewRole_Name').val() == '') {
+            alert('Please enter the name of the new role !');
+        }
+        else {
+            var data = {
+                "NewRole_Name": $('#NewRole_Name').val()
+            };
+
+            $.ajax({
+                type: "POST",
+                url: "/Admin/AddRole",
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function (result) {
+                    if (result == "exists") {
+                        alert('Already there');
+                    }
+                    else if (result == "success") {
+                        alert('Role Added');
+                    }
+
+                    location.reload(true);
+
+                },
+                error: function (result) {
+                    alert('error');
+                }
+
+            });
+        }        
+
+    });
+
+</script>

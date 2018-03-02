@@ -1,4 +1,4 @@
-﻿
+﻿@model CheckOnClick.Models.AdminProfile
 @{
     ViewBag.Title = "Profile";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
@@ -17,7 +17,8 @@
                 <label for="admin_fullName">Full Name</label>
             </div>
             <div class="col-md-8">
-                <input type="text" id="admin_fullName" name="admin_fullName" class="form-control" placeholder="Full Name" disabled />
+  <!--              <input type="text" id="admin_fullName" name="admin_fullName" class="form-control" placeholder="Full Name" disabled />   -->
+                @Html.TextBoxFor(a => a.Admin_FullName, new { @class = "form-control", @placeholder = "Full Name", @disabled = "disabled" })
             </div>
         </div>
 
@@ -26,7 +27,8 @@
                 <label for="admin_userName">User Name</label>
             </div>
             <div class="col-md-8">
-                <input type="text" id="admin_userName" name="admin_userName" class="form-control" placeholder="User Name" disabled />
+   <!--             <input type="text" id="admin_userName" name="admin_userName" class="form-control" placeholder="User Name" disabled />   -->
+                @Html.TextBoxFor(a => a.Admin_UserName, new { @class = "form-control", @placeholder = "User Name", @disabled = "disabled" })
             </div>
         </div>
 
@@ -35,7 +37,8 @@
                 <label for="admin_email">Email</label>
             </div>
             <div class="col-md-8">
-                <input type="email" id="admin_email" name="admin_email" class="form-control" placeholder="Email" disabled />
+   <!--             <input type="email" id="admin_email" name="admin_email" class="form-control" placeholder="Email" disabled />    -->
+                @Html.TextBoxFor(a => a.Admin_Email, new { @class = "form-control", @placeholder = "Email", @disabled = "disabled" })
             </div>
         </div>
 
@@ -44,7 +47,8 @@
                 <label for="admin_contact">Contact Number</label>
             </div>
             <div class="col-md-8">
-                <input type="text" id="admin_contact" name="admin_contact" class="form-control" placeholder="Contact Number" disabled />
+   <!--             <input type="text" id="admin_contact" name="admin_contact" class="form-control" placeholder="Contact Number" disabled />    -->
+                @Html.TextBoxFor(a => a.Admin_Contact, new { @class = "form-control", @placeholder = "Contact Number", @disabled = "disabled" })
             </div>
         </div>
 
@@ -53,7 +57,8 @@
                 <label for="admin_dob">Date of Birth</label>
             </div>
             <div class="col-md-8">
-                <input type="date" id="admin_dob" name="admin_dob" class="form-control" placeholder="Date of Birth" disabled />
+    <!--            <input type="date" id="admin_dob" name="admin_dob" class="form-control" placeholder="Date of Birth" disabled /> -->
+                @Html.TextBoxFor(a => a.Admin_DOB, new { @class = "form-control", @placeholder = "Date of Birth", @disabled = "disabled" })
             </div>
         </div>
 
@@ -62,13 +67,15 @@
                 <label for="admin_addCity">Address: City</label>
             </div>
             <div class="col-md-3">
-                <input type="text" id="admin_addCity" name="admin_addCity" class="form-control" placeholder="City" disabled />
+    <!--            <input type="text" id="admin_addCity" name="admin_addCity" class="form-control" placeholder="City" disabled />  -->
+                @Html.TextBoxFor(a => a.Admin_City, new { @class = "form-control", @placeholder = "City", @disabled = "disabled" })
             </div>
             <div class="col-md-2">
                 <label for="admin_addState">State</label>
             </div>
             <div class="col-md-3">
-                <input type="text" id="admin_addState" name="admin_addState" class="form-control" placeholder="State" disabled />
+     <!--           <input type="text" id="admin_addState" name="admin_addState" class="form-control" placeholder="State" disabled />   -->
+                @Html.TextBoxFor(a => a.Admin_State, new { @class = "form-control", @placeholder = "State", @disabled = "disabled" })
             </div>
         </div>
 
@@ -77,13 +84,15 @@
                 <label for="admin_addCountry">Country</label>
             </div>
             <div class="col-md-3">
-                <input type="text" id="admin_addCountry" name="admin_addCountry" class="form-control" placeholder="Country" disabled />
+     <!--           <input type="text" id="admin_addCountry" name="admin_addCountry" class="form-control" placeholder="Country" disabled /> -->
+                @Html.TextBoxFor(a => a.Admin_Country, new { @class = "form-control", @placeholder = "Country", @disabled = "disabled" })
             </div>
             <div class="col-md-2">
                 <label for="admin_addPin">Pin</label>
             </div>
             <div class="col-md-3">
-                <input type="number" id="admin_addPin" name="admin_addPin" class="form-control" placeholder="Pin" disabled />
+     <!--           <input type="number" id="admin_addPin" name="admin_addPin" class="form-control" placeholder="Pin" disabled />   -->
+                @Html.TextBoxFor(a => a.Admin_Pin, new { @class = "form-control", @placeholder = "Pin", @disabled = "disabled" })
             </div>
         </div>
 
@@ -92,7 +101,7 @@
                 <button type="button" class="btn btn-block btn-primary" name="admin_profile_edit" id="admin_profile_edit"><i class="fa fa-edit"></i> Edit Profile</button>
             </div>
             <div class="col-md-4" id="save_div">
-                <button type="submit" class="btn btn-block btn-success" name="admin_profile_update" id="admin_profile_update"><i class="fa fa-check"></i> Save Changes</button>
+                <button type="button" class="btn btn-block btn-success" name="admin_profile_update" id="admin_profile_update"><i class="fa fa-check"></i> Save Changes</button>
             </div>
             <div class="col-md-4">
                 <button type="button" class="btn btn-block btn-primary" name="admin_password_edit" id="admin_password_edit" data-toggle="modal" data-target="#edit_Password"><i class="fa fa-edit"></i> Change Password</button>
@@ -107,10 +116,11 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Change Password</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+    <span aria-hidden="true">&times;</span>
+</button>
+                        <h5 class="modal-title" id="exampleModalLabel">Change Password</h5>
+                        
                     </div>
                     <div class="modal-body">
                         
@@ -120,7 +130,8 @@
                                     <label for="cur_password">Current Password</label>
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="password" name="cur_password" id="cur_password" class="form-control" placeholder="Current Password" />
+       <!--                             <input type="password" name="cur_password" id="cur_password" class="form-control" placeholder="Current Password" /> -->
+                                    @Html.PasswordFor(a => a.Admin_Password, new { @class = "form-control", @placeholder = "Current Password"})
                                 </div>
                             </div>
 
@@ -129,16 +140,18 @@
                                     <label for="new_password">New Password</label>
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="password" name="new_password" id="new_password" class="form-control" placeholder="New Password" />
+        <!--                            <input type="password" name="new_password" id="new_password" class="form-control" placeholder="New Password" /> -->
+                                    @Html.PasswordFor(a => a.Admin_NewPassword, new { @class = "form-control", @placeholder = "New Password" })
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="col-md-4">
-                                    <label for="retype_password">Current Password</label>
+                                    <label for="retype_password">Re-Type Password</label>
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="password" name="retype_password" id="retype_password" class="form-control" placeholder="Re-Type Password" />
+         <!--                           <input type="password" name="retype_password" id="retype_password" class="form-control" placeholder="Re-Type Password" />   -->
+                                    @Html.PasswordFor(a => a.Admin_RePassword, new { @class = "form-control", @placeholder = "Re-Type Password" })
                                 </div>
                             </div>
 
@@ -167,16 +180,115 @@
 
 <script>
 
+
+    // Displaying profile details in each fields
+    $.ajax({
+        type: "GET",
+        url: "/Admin/GetProfile",
+        contentType: "application/json",
+        dataType: "json",
+        success: function (result) {
+            if (result != null) {
+
+                $.each(result, function (i, v1) {
+                    
+                    $('#Admin_FullName').val(v1.Admin_FullName);
+                    $('#Admin_UserName').val(v1.Admin_UserName);
+                    $('#Admin_Email').val(v1.Admin_Email);
+                    $('#Admin_Contact').val(v1.Admin_Contact);
+                    value = new Date(parseInt(v1.Admin_DOB.substr(6)));
+                    $('#Admin_DOB').val(value.getDate() + "/" + value.getMonth() + 1 + "/" + value.getFullYear());
+                    $('#Admin_City').val(v1.Admin_City);
+                    $('#Admin_State').val(v1.Admin_State);
+                    $('#Admin_Country').val(v1.Admin_Country);
+                    $('#Admin_Pin').val(v1.Admin_Pin);
+                });
+
+            }
+            else {
+                alert('Something went wrong');
+            }
+        },
+        failure: function () {
+            alert('Failure');
+        },
+        error: function () {
+            alert('error');
+        }
+    });
+
+
     $("#save_div").hide();
+
+    // Action when we click Edit Profile Button
     $("#admin_profile_edit").click(function () {
         $("#edit_div").hide();
         $("#save_div").show();
 
-        $("#admin_fullName").removeAttr("disabled");
-        $("#admin_contact").removeAttr("disabled");
-        $("#admin_addCity").removeAttr("disabled");
-        $("#admin_addState").removeAttr("disabled");
-        $("#admin_addCountry").removeAttr("disabled");
-        $("#admin_addPin").removeAttr("disabled");
+        $("#Admin_FullName").removeAttr("disabled");
+        $("#Admin_Contact").removeAttr("disabled");
+        $("#Admin_City").removeAttr("disabled");
+        $("#Admin_State").removeAttr("disabled");
+        $("#Admin_Country").removeAttr("disabled");
+        $("#Admin_Pin").removeAttr("disabled");
+    });
+
+    // Action when we click Update Profile Button
+    $('#admin_profile_update').click(function () {
+
+        var valid = true;
+
+        if ($('#Admin_FullName').val() == '') {
+            valid = false;
+        }
+        if ($('#Admin_Contact').val() == '') {
+            valid = false;
+        }
+        if ($('#Admin_City').val() == '') {
+            valid = false;
+        }
+        if ($('#Admin_State').val() == '') {
+            valid = false;
+        }
+        if ($('#Admin_Country').val() == '') {
+            valid = false;
+        }
+        if ($('#Admin_Pin').val() == '') {
+            valid = false;
+        }
+
+        if (valid == false) {
+            alert('Please fill all the fields');
+        }
+        else {
+
+            var data = {
+                "Admin_FullName": $('#Admin_FullName').val(),
+                "Admin_Contact": $('#Admin_Contact').val(),
+                "Admin_City": $('#Admin_City').val(),
+                "Admin_State": $('#Admin_State').val(),
+                "Admin_Country": $('#Admin_Country').val(),
+                "Admin_Pin": $('#Admin_Pin').val()
+
+            };
+
+            $.ajax({
+                type: "POST",
+                url: "/Admin/UpdateProfile",
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function (result) {
+                    alert('Successfully Updated !');
+                    location.reload(true);
+                },
+                failure: function (result) {
+                    alert('Something went wrong: failure');
+                },
+                error: function (result) {
+                    alert('Something went wrong: error');
+                }
+            });
+        }
     });
 </script>

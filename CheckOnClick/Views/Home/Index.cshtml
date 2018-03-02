@@ -1,4 +1,5 @@
-﻿
+﻿@model CheckOnClick.Models.LoginSignup
+
 @{
     Layout = null;
 }
@@ -53,6 +54,18 @@
     <![endif]-->
 </head>
 <body>
+
+    @if (@TempData["Message"] != null)
+    {
+        <script type="text/javascript">
+
+            var msg = '@TempData["Message"]';
+                alert(msg);
+
+        </script>
+
+    }
+
 
     <!-- BEGAIN PRELOADER -->
     <div id="preloader">
@@ -134,24 +147,43 @@
                         </div>
                         <div class="modal-body bg-info">
 
-                            <form action="doctor.html" method="post">
+                            <!--              <form action="doctor.html" method="post">
+                                          <div class="form-group">
+                                              <label for="exampleInputEmail1" style="font-size: 22px;">Email address</label>
+                                              <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" style="font-size: 22px;">
+                                          </div>
+                                          <div class="form-group">
+                                              <label for="exampleInputPassword1" style="font-size: 22px;">Password</label>
+                                              <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" style="font-size: 22px;">
+                                          </div>
+                                          <div class="form-check">
+                                              <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                              <label class="form-check-label" for="exampleCheck1" style="font-size: 22px;">Remember Me</label>
+                                          </div>
+
+                                          <button type="submit" class="btn btn-primary center-block" style="font-size: 22px;">Login</button>
+
+
+                                      </form>
+                            -->
+                            @using (Html.BeginForm("Login", "Home", FormMethod.Post))
+                            {
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1" style="font-size: 22px;">Email address</label>
-                                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" style="font-size: 22px;">
+                                    @Html.LabelFor(a => a.UserName)
+                                    @Html.TextBoxFor(a => a.UserName, new { @class = "form-control" })
+                                    <span>@Html.ValidationMessageFor(a => a.UserName)</span>
                                 </div>
+
                                 <div class="form-group">
-                                    <label for="exampleInputPassword1" style="font-size: 22px;">Password</label>
-                                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" style="font-size: 22px;">
-                                </div>
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                    <label class="form-check-label" for="exampleCheck1" style="font-size: 22px;">Remember Me</label>
+                                    @Html.LabelFor(a => a.Password)
+                                    @Html.PasswordFor(a => a.Password, new { @class = "form-control" })
+                                    <span>@Html.ValidationMessageFor(a => a.Password)</span>
                                 </div>
 
-                                <button type="submit" class="btn btn-primary center-block" style="font-size: 22px;">Login</button>
 
+                                <button type="submit" class="btn btn-primary center-block" id="btnLogin" style="font-size: 22px;">Login</button>
 
-                            </form>
+                            }
 
 
                         </div>
@@ -176,38 +208,57 @@
 
                             <form>
                                 <div class="form-group">
-                                    <label for="pFullName">Full Name</label>
-                                    <input type="text" class="form-control" id="pFullName" placeholder="Full Name">
+                                    <label for="FullName">Full Name</label>
+                                    <!--      <input type="text" class="form-control" id="pFullName" placeholder="Full Name"> -->
+                                    @Html.TextBoxFor(a => a.FullName, new { @class = "form-control", @placeholder = "Full Name" })
+                                    <span id="err_fullname"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="PaUserName">User Name</label>
+                                    <!--      <input type="text" class="form-control" id="pFullName" placeholder="Full Name"> -->
+                                    @Html.TextBoxFor(a => a.PaUserName, new { @class = "form-control", @placeholder = "User Name" })
+                                    <span id="err_username"></span>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-3">
-                                        <label for="pGender">Gender</label>
+                                        <label for="Gender">Gender</label>
                                     </div>
                                     <div class="col-sm-3">
-                                        <input type="radio"> Male
+                                        <!--     <input type="radio"> Male   -->
+                                        @Html.RadioButtonFor(a => a.Gender, "Male") Male
                                     </div>
                                     <div class="col-sm-3">
-                                        <input type="radio"> Female
+                                   <!--     <input type="radio"> Female -->
+                                        @Html.RadioButtonFor(a => a.Gender, "Female") Female
                                     </div>
+                                    <span id="err_gender"></span>
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Email address</label>
-                                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                                    <label for="Email">Email address</label>
+                                 <!--   <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">    -->
+                                        @Html.TextBoxFor(a => a.Email, new { @class = "form-control", @placeholder = "Enter Email" })
+                                        <span id="err_email"></span>
                                 </div>
                                 <div class="form-group">
-                                    <label for="pContact">Contact Number</label>
-                                    <input type="number" class="form-control" id="Contact" aria-describedby="emailHelp" placeholder="Contact Number">
+                                    <label for="Contact">Contact Number</label>
+                               <!--     <input type="number" class="form-control" id="Contact" aria-describedby="emailHelp" placeholder="Contact Number">   -->
+                                        @Html.TextBoxFor(a => a.Contact, new { @class = "form-control", @placeholder = "Enter Contact Number" })
+                                        <span id="err_contact"></span>
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleInputPassword1">Password</label>
-                                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                                    <label for="PaPassword">Password</label>
+                                 <!--   <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">  -->
+                                        @Html.PasswordFor(a => a.PaPassword, new { @class = "form-control", @placeholder = "Create Password" })
+                                        <span id="err_pass"></span>
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleInputPassword1">Confirm Password</label>
-                                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Confirm Password">
+                                    <label for="ConfirmPassword">Confirm Password</label>
+                                 <!--  <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Confirm Password">   -->
+                                        @Html.PasswordFor(a => a.ConfirmPassword, new { @class = "form-control", @placeholder = "Confirm Password"})
+                                        <span id="err_conPass"></span>
                                 </div>
 
-                                <button type="submit" class="btn btn-primary center-block">Sign Up</button>
+                                <button type="button" id="btnSignup" class="btn btn-primary center-block">Sign Up</button>
                             </form>
 
 
@@ -1107,9 +1158,70 @@
             </div>
         </div>
     </footer>
-    <!--=========== End Footer SECTION ================-->
+
     <!-- jQuery Library  -->
     <script src="/js/jquery.js"></script>
+
+    <script type="text/javascript">
+        var uname2 = localStorage.getItem("Lusername");
+        if (uname2 != undefined && uname2 != null) {
+            $('#UserName').val(uname2);
+        }
+        $('#btnLogin').click(function () {
+            var uname = $('#UserName').val();
+            localStorage.setItem("Lusername", uname);
+        });
+
+        $('#btnSignup').click(function () {
+
+            if (validate_createAccount()) {
+                var data = {
+                    "FullName": $('#FullName').val(),
+                    "PaUserName": $('#PaUserName').val(),
+                    "Email": $('#Email').val(),
+                    "Gender": $('#Gender:checked').val(),
+                    "Contact": $('#Contact').val(),
+                    "PaPassword": $('#PaPassword').val()
+                };
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Home/CreateAccount",
+                    dataType: "json",
+                    contentType: "application/json",
+                    data: JSON.stringify(data),
+                    success: function (result) {
+                        if (result == "Saved") {
+                            alert('Account Successfully Created! Please Login to start !');
+                        }
+                        else if (result == "Email") {
+                            alert('Email has already registered, Please use another email');
+                        }
+                        else if (result == "Contact") {
+                            alert('Contact Number has already registered, Please use another contact number');
+                        }
+                        else if (result == "UserName") {
+                            alert('Username has already taken by someone, Please use a different username');
+                        }
+
+                        location.reload(true);
+                    },
+                    failure: function (result) {
+                        alert('Something went wrong: failure');
+                        location.reload(true);
+                    },
+                    error: function (result) {
+                        alert('Something went wrong : error');
+                        location.reload(true);
+                    }
+
+                });
+            }
+
+
+        });
+    </script>
+    <!--=========== End Footer SECTION ================-->
     <!-- Bootstrap default js -->
     <script src="/js/bootstrap.min.js"></script>
     <!-- slick slider -->

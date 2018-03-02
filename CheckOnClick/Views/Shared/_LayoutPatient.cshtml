@@ -426,8 +426,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                 <div class="profile_img">
                                     <span class="prfil-img"><img src="/images2/2.jpg" alt=""> </span>
                                     <div class="user-name">
-                                        <p>Patient Name</p>
-                                        <!--				<span>Administrator</span>	-->
+                        <!--                <p>Patient Name</p> -->
+                                        <p>@HttpContext.Current.Session["PatientUserName"].ToString()</p>
+                                        <span>Patient</span>
                                     </div>
                                     <i class="fa fa-angle-down lnr"></i>
                                     <i class="fa fa-angle-up lnr"></i>
@@ -437,8 +438,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                             <ul class="dropdown-menu drp-mnu">
                                 <!--			<li> <a href="#"><i class="fa fa-cog"></i> Settings</a> </li>
                                             <li> <a href="#"><i class="fa fa-user"></i> My Account</a> </li>
-                                            <li> <a href="#"><i class="fa fa-suitcase"></i> Profile</a> </li> -->
-                                <li> <a href="#"><i class="fa fa-sign-out"></i> Logout</a> </li>
+                                            <li> <a href="#"><i class="fa fa-suitcase"></i> Profile</a> </li> 
+                                <li> <a href="#"><i class="fa fa-sign-out"></i> Logout</a> </li> -->
+                                <li><i class="fa fa-sign-out"> @Html.ActionLink("Logout", "Logout", "Home") </i></li>
                             </ul>
                         </li>
                     </ul>

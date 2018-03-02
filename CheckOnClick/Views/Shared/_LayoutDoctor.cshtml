@@ -428,8 +428,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                 <div class="profile_img">
                                     <span class="prfil-img"><img src="/images2/2.jpg" alt=""> </span>
                                     <div class="user-name">
-                                        <p>Doctor Name</p>
-                                        <!--				<span>Administrator</span>	-->
+                              <!--          <p>Doctor Name</p>  -->
+                                        <p>@HttpContext.Current.Session["DoctorUserName"].ToString()</p>
+                                        <span>Doctor</span>
                                     </div>
                                     <i class="fa fa-angle-down lnr"></i>
                                     <i class="fa fa-angle-up lnr"></i>
