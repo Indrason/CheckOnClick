@@ -341,7 +341,7 @@ namespace CheckOnClick.Controllers
                     DOCTOR_ID = Convert.ToInt16(dr["DOCTOR_ID"]),
                     DOCTOR_NAME = dr["DOCTOR_NAME"].ToString(),
                     FBDK_DESC = dr["FBDK_DESC"].ToString(),
-                    RATING = Convert.ToDecimal(dr["FDBK_ID"]),
+                    RATING = Convert.ToDecimal(dr["RATING"]),
                 });
             }
             var data = feedbacksList;
