@@ -1,4 +1,5 @@
-﻿@{
+﻿@model CheckOnClick.Models.Feedback
+@{
     ViewBag.Title = "Feedbacks";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
@@ -21,17 +22,7 @@
                         <td>Rating</td>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>1180001</td>
-                        <td>Rajesh</td>
-                        <td>17652</td>
-                        <td>Sam</td>
-                        <td>Good suggestion and able to judege my problem</td>
-                        <td>4.5</td>
-                    </tr>
-                </tbody>
+                <tbody></tbody>
             </table>
         </div>
     </div>
@@ -40,6 +31,23 @@
 
 <script>
     $(document).ready(function () {
-        $("#table_feedback").DataTable();
+        $("#table_feedback").DataTable({
+            "ajax": {
+                type: "GET",
+                url: "/Admin/ShowFeedback",
+                dataType: "json",
+                contentType: "application/json"
+            },
+            "columns": [
+                { "data": "FDBK_ID" },
+                { "data": "PATIENT_ID" },
+                { "data": "PATIENT_NAME" },
+                { "data": "DOCTOR_ID" },
+                { "data": "DOCTOR_NAME" },
+                { "data": "FBDK_DESC" },
+                { "data": "RATING" },]
+
+
+        });
     });
 </script>

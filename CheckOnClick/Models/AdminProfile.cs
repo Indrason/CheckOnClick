@@ -108,5 +108,40 @@ namespace CheckOnClick.Models
             }
         }
 
+        //Updating Admin Password
+
+        public string UpdatingPassword(string _password, string _newPassword, string _admin)
+        {
+            try
+            {
+                SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["dbconnect"].ConnectionString);
+
+                string updateQuery = "coc_updateAdminPassword";
+
+                SqlCommand cmd = new SqlCommand(updateQuery, con);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("@txtPassword", _password);
+                cmd.Parameters.AddWithValue("@txtNewPassword", _newPassword);
+                cmd.Parameters.AddWithValue("@txtAdmin", _admin);
+                cmd.Parameters.Add("@txtStatus", SqlDbType.VarChar, 30);
+                cmd.Parameters["@txtStatus"].Direction = ParameterDirection.Output;
+
+                con.Open();
+                cmd.ExecuteNonQuery();
+                con.Close();
+
+                return cmd.Parameters["@txtStatus"].Value.ToString();
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
+        // Getting details of the staffs (Doctor)
+       
+
     }
 }

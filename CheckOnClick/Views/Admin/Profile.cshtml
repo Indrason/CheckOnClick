@@ -157,7 +157,7 @@
 
                             <div class="row">
                                 <div class="col-md-6">
-                                    <button type="submit" name="update_password" id="update_password" class="btn btn-success form-control"><i class="fa fa-check"></i> Change Password</button>
+                                    <button type="button" name="update_password" id="update_password" class="btn btn-success form-control"><i class="fa fa-check"></i> Change Password</button>
                                 </div>
                             </div>
                         </form>
@@ -287,6 +287,58 @@
                 },
                 error: function (result) {
                     alert('Something went wrong: error');
+                }
+            });
+        }
+    });
+
+    $('#update_password').click(function () {
+        var valid = true;
+        if ($('#Admin_Password').val() == "") {
+            valid = false;
+        }
+        if ($('#Admin_NewPassword').val() == "") {
+            valid = false;
+        }
+        if ($('#Admin_RePassword').val() == "") {
+            valid = false;
+        }
+        if ($('#Admin_NewPassword').val() != null && $('#Admin_RePassword').val() != null && $('#Admin_NewPassword').val() != $('#Admin_RePassword').val()) {
+            alert('Passwords are mismatched');
+            valid = false;
+        }
+
+        if (valid == false) {
+            alert('Please fill all the fields');
+        }
+        else {
+            var data = {
+                "Admin_Password": $('#Admin_Password').val(),
+                "Admin_NewPassword": $('#Admin_NewPassword').val()
+            };
+
+            $.ajax({
+                type: "POST",
+                url: "/Admin/UpdateAdminPassword",
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function (result) {
+                    if (result == 'notMatch') {
+                        alert('Current Password is incorrect');
+                    }
+                    else if (result == 'saved') {
+                        alert('Password successfully changed');
+                    }
+                    else {
+                        alert('Something went wrong');
+                    }
+                    location.reload(true);
+
+
+                },
+                error: function (result) {
+                    alert('Problem changing the password, please try again !');
                 }
             });
         }

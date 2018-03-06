@@ -1,4 +1,5 @@
-﻿@{
+﻿@model CheckOnClick.Models.Specialization
+@{
     ViewBag.Title = "Specializations";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
@@ -20,34 +21,7 @@
 
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Cardiologist</td>
-                        <td>
-                            <button type="button" class="btn  btn-danger" name="admin_remove_specialization"><i class="fa fa-times"></i> Remove</button>
-                        </td>
-
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>
-                            Neurologist
-                        </td>
-                        <td>
-                            <button type="button" class="btn  btn-danger" name="admin_remove_specialization"><i class="fa fa-times"></i> Remove</button>
-                        </td>
-
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Dentist</td>
-                        <td>
-                            <button type="button" class="btn  btn-danger" name="admin_remove_specialization"><i class="fa fa-times"></i> Remove</button>
-                        </td>
-
-                    </tr>
-                </tbody>
+                <tbody id="specbody"></tbody>
             </table>
         </div>
         .
@@ -73,33 +47,106 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="row form-group">
-                            <div class="col-md-5">
-                                <label class="control-label">Enter Specialization Name</label>
+                        <form>
+                            <div class="row form-group">
+                                <div class="col-md-5">
+                                    <label class="control-label">Enter Specialization Name</label>
+                                </div>
+                                <div class="col-md-6">
+                                    @Html.TextBoxFor(a => a.NewSPEC_Name, new { @class = "form-control", @placeholder = "Enter Specialization" })
+                                </div>
                             </div>
-                            <div class="col-md-6">
-                                <input type="text" class="form-control" name="specializationname" value="" placeholder="Enter specialization Name">
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <button type="button" id="saveSpec" class="btn btn-primary">Add Specialization</button>
+                                </div>
                             </div>
-                        </div>
-                    
-                        <div class="row">
-                            <div class="col-md-6">
-                                <button type="button" class="btn btn-primary">Add Specialization</button>
-                            </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
 
             <!-- Modal Close-->
-            
+
+        </div>
     </div>
-</div>
 
 </div>
 
 <script>
-        $(document).ready(function () {
-            $("#table_specialization").DataTable();
+    /*
+            $.ajax({
+                type: "GET",
+                url: "/Admin/ShowRole",
+                dataType: "json",
+                contentType: "application/json",
+                success: function (result) {
+                    if (result != null) {
+                        $.each(result, function (i, v1) {
+                            $('#roleBody').append('<tr><td>' + v1.Role_ID + '</td><td>' + v1.Role_Name + '</td><td>' + v1.Role_Status + '</td></tr>');
+                        });
+                    }
+                },
+                error: function (result) {
+                    alert('Error occured !');
+                },
+                failure: function (result) {
+                    alert('Failure occured');
+                }
+            });
+            */
+
+    $(document).ready(function () {
+        $("#table_specialization").DataTable({
+            "ajax": {
+                type: "GET",
+                url: "/Admin/ShowSpec",
+                dataType: "json",
+                contentType: "application/json"
+            },
+            "columns": [
+                { "data": "SPEC_ID" },
+                { "data": "SPEC_Name" },
+                { "data": "Active" },]
+
+
         });
+    });
+
+    $('#saveSpec').click(function () {
+        var valid = true;
+        if ($('#NewSPEC_NAME').val() == '') {
+            valid = false;
+        }
+        else {
+            var data = {
+                "NewSPEC_Name": $('#NewSPEC_Name').val()
+            };
+        }
+        $.ajax({
+            type: "POST",
+            url: "/Admin/AddSpec",
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            success: function (result) {
+                if (result == "exists") {
+                    alert('Already there');
+                }
+                else if (result == "success") {
+                    alert('Role Added');
+                }
+
+                location.reload(true);
+
+            },
+            error: function (result) {
+                alert('error');
+            }
+
+
+        })
+
+    });
 </script>

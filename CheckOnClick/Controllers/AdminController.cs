@@ -195,5 +195,157 @@ namespace CheckOnClick.Controllers
 
 
         }
+
+        // Getting the details of Staffs (Doctors)
+        [HttpGet]
+        public JsonResult ShowDoctors()
+        {
+            Models.Staffs staffs = new Staffs();
+            DataSet dsDoctor = staffs.getDoctor();
+
+            List<Staffs> staffList = new List<Staffs>();
+
+            foreach (DataRow dr in dsDoctor.Tables[0].Rows)
+            {
+                staffList.Add(new Staffs
+                {
+                    Staff_ID = Convert.ToInt32(dr["Staff_ID"]),
+                    Staff_Name = dr["Staff_Name"].ToString(),
+                    Staff_Spec = dr["Spec_Name"].ToString(),
+                    Staff_DOB = dr["Staff_DOB"].ToString(),
+                    Staff_BloodGroup = dr["Staff_BloodGp"].ToString(),
+                    Staff_Email = dr["Staff_Email"].ToString(),
+                    Staff_Contact = dr["Staff_Contact"].ToString(),
+                    Staff_City = dr["Staff_City"].ToString(),
+                    Staff_State = dr["Staff_State"].ToString(),
+                    Staff_Country = dr["Staff_Country"].ToString(),
+                    Staff_Pin = Convert.ToInt32(dr["Staff_Pin"]),
+                    Staff_Acnt_Date = dr["Staff_Acnt_Date"].ToString(),
+                    Active = dr["Active"].ToString()
+                });
+            }
+            var data = staffList;
+            return Json(new { data = data }, JsonRequestBehavior.AllowGet);
+        }
+
+        // Adding  Doctor
+        [HttpPost]
+        public ActionResult AddDoctor(Models.Staffs staffs)
+        {
+            var status = staffs.AddNewDoctor(staffs.Staff_Name, staffs.Staff_Spec, staffs.Staff_DOB, staffs.Staff_BloodGroup, staffs.Staff_Email, staffs.Staff_Contact, staffs.Staff_City, staffs.Staff_State, staffs.Staff_Country, staffs.Staff_Pin);
+
+            return Json(status.ToString(), JsonRequestBehavior.AllowGet);
+        }
+
+        //Display Specification in dropdown in Add Doctor
+
+        public void showSpecDropDown()
+        {
+
+        }
+
+        //Updating Admin Password
+        public JsonResult UpdateAdminPassword(Models.AdminProfile password)
+        {
+            string LiveAdmin = Session["AdminUserName"].ToString();
+            var passwordStatus = password.UpdatingPassword(password.Admin_Password, password.Admin_NewPassword, LiveAdmin);
+
+            return Json(passwordStatus.ToString(), JsonRequestBehavior.AllowGet);
+        }
+
+        // Displaying list of specialization in admin
+        public JsonResult ShowSpec()
+        {
+            Models.Specialization spec = new Specialization();
+            //   string LiveAdmin = Session["AdminUserName"].ToString();
+            DataSet dsSpecialization = spec.getspecialization();
+
+            List<Specialization> specList = new List<Specialization>();
+
+
+            foreach (DataRow dr in dsSpecialization.Tables[0].Rows)
+            {
+                specList.Add(new Specialization
+                {
+                    SPEC_ID = Convert.ToInt16(dr["SPEC_ID"]),
+                    SPEC_Name = dr["SPEC_Name"].ToString(),
+                    Active = dr["Active"].ToString()
+                });
+            }
+            var data = specList;
+            return Json(new { data = data }, JsonRequestBehavior.AllowGet);
+        }
+
+        // Adding new Specialization by the admin
+        [HttpPost]
+        public ActionResult AddSpec(Models.Specialization spec)
+        {
+            var status = spec.createSpec(spec.NewSPEC_Name);
+
+            return Json(status.ToString(), JsonRequestBehavior.AllowGet);
+
+
+        }
+
+        // Displaying list of Patients in the Admin Panel
+        public JsonResult ShowPatient()
+        {
+            Models.Patient Patients = new Patient();
+            //   string LiveAdmin = Session["AdminUserName"].ToString();
+            DataSet dspatient = Patients.getPatient();
+
+            List<Patient> patientsList = new List<Patient>();
+
+
+            foreach (DataRow dr in dspatient.Tables[0].Rows)
+            {
+                patientsList.Add(new Patient
+                {
+                    PATIENT_ID = Convert.ToInt32(dr["PATIENT_ID"]),
+                    PATIENT_NAME = dr["PATIENT_NAME"].ToString(),
+                    PATIENT_USERNAME = dr["PATIENT_USERNAME"].ToString(),
+                    PATIENT_EMAIL = dr["PATIENT_EMAIL"].ToString(),
+                    PATIENT_GENDER = dr["PATIENT_GENDER"].ToString(),
+                    PATIENT_CONTACT = dr["PATIENT_CONTACT"].ToString(),
+                    PATIENT_DOB = dr["PATIENT_DOB"].ToString(),
+                    PATIENT_BLOODGP = dr["PATIENT_BLOODGP"].ToString(),
+                    PATIENT_CITY = dr["PATIENT_CITY"].ToString(),
+                    PATIENT_STATE = dr["PATIENT_STATE"].ToString(),
+                    PATIENT_COUNTRY = dr["PATIENT_COUNTRY"].ToString(),
+                    PATIENT_PIN = Convert.ToInt32(dr["PATIENT_PIN"]),
+                    PATIENT_ACNT_DATE = dr["PATIENT_ACNT_DATE"].ToString(),
+                    ACTIVE = dr["Active"].ToString()
+                });
+            }
+            var data = patientsList;
+            return Json(new { data = data }, JsonRequestBehavior.AllowGet);
+        }
+
+        // Display list of Feedbacks in the Admin
+        public JsonResult ShowFeedback()
+        {
+            Models.Feedback feedbacks = new Feedback();
+            //   string LiveAdmin = Session["AdminUserName"].ToString();
+            DataSet dsFeedback = feedbacks.getFeedback();
+
+            List<Feedback> feedbacksList = new List<Feedback>();
+
+
+            foreach (DataRow dr in dsFeedback.Tables[0].Rows)
+            {
+                feedbacksList.Add(new Feedback
+                {
+                    FDBK_ID = Convert.ToInt16(dr["FDBK_ID"]),
+                    PATIENT_ID = Convert.ToInt16(dr["PATIENT_ID"]),
+                    PATIENT_NAME = dr["PATIENT_NAME"].ToString(),
+                    DOCTOR_ID = Convert.ToInt16(dr["DOCTOR_ID"]),
+                    DOCTOR_NAME = dr["DOCTOR_NAME"].ToString(),
+                    FBDK_DESC = dr["FBDK_DESC"].ToString(),
+                    RATING = Convert.ToDecimal(dr["FDBK_ID"]),
+                });
+            }
+            var data = feedbacksList;
+            return Json(new { data = data }, JsonRequestBehavior.AllowGet);
+        }
     }
 }

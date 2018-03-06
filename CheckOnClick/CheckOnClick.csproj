@@ -272,8 +272,12 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AdminProfile.cs" />
+    <Compile Include="Models\Feedback.cs" />
     <Compile Include="Models\LoginSignup.cs" />
+    <Compile Include="Models\patient.cs" />
     <Compile Include="Models\Roles.cs" />
+    <Compile Include="Models\Specialization.cs" />
+    <Compile Include="Models\Staffs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,4 +1,5 @@
-﻿@{
+﻿@model CheckOnClick.Models.Patient
+@{
     ViewBag.Title = "Doctors";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
@@ -9,31 +10,26 @@
     </div>
     <div class="form-body">
         <div class="table-responsive">
-            <table class="table" id="table_doctors">
+            <table class="table" id="table_patients">
                 <thead class="bg-info">
                     <tr>
-                        <td>patientUID</td>
+                        <td>Patient ID</td>
                         <td> Name</td>
-                        <td> email</td>
-                        <td> contact</td>
-                        <td>dob</td>
-                        <td>bloodgroup</td>
-                        <td>city</td>
-                        <td>state</td>
-                        <td>country</td>
-                        <td>acnt_date</td>
-                        <td>is active</td>
+                        <td>Patient Username</td>
+                        <td> Email</td>
+                        <td>Gender</td>
+                        <td> Contact</td>
+                        <td>DOB</td>
+                        <td>BloodGroup</td>
+                        <td>City</td>
+                        <td>State</td>
+                        <td>Country</td>
+                        <td>Pin</td>
+                        <td>Acnt_Date</td>
+                        <td>Is Active</td>
                     </tr>
                 </thead>
-                <!--<tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Dr. Patro</td>
-                        <td>Mr. Gana</td>
-                        <td>24/02/2018 16:00:00</td>
-                        <td>Strong Fever</td>
-                    </tr>
-                </tbody>-->
+                <tbody id="patientbody"></tbody>
             </table>
         </div>
         <div class="row">
@@ -53,131 +49,129 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                <!--        <div class="form-grids row widget-shadow" data-example-id="basic-forms">    
-                            <div class="form-title">
-                                <h4>Add patient</h4>
+                        <!--        <div class="form-grids row widget-shadow" data-example-id="basic-forms">
+                                    <div class="form-title">
+                                        <h4>Add patient</h4>
+                                    </div>
+                                    <div class="form-body fluid">   -->
+
+                        <div class="row form-group">
+                            <div class="col-md-3">
+                                <label for="patient_fullname">full name</label>
                             </div>
-                            <div class="form-body fluid">   -->
+                            <div class="col-md-9">
+                                <input type="text" id="patient_fullname" name="patient_fullname" class="form-control" placeholder="Full Name" />
+                            </div>
+                        </div>
 
-                                <div class="row form-group">
-                                    <div class="col-md-3">
-                                        <label for="patient_fullname">full name</label>
-                                    </div>
-                                    <div class="col-md-9">
-                                        <input type="text" id="patient_fullname" name="patient_fullname" class="form-control" placeholder="Full Name" />
-                                    </div>
-                                </div>
+                        <div class="row form-group">
+                            <div class="col-md-3">
+                                <label for="patient_email">Email</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="email" id="patient_email" name="patient_email" class="form-control" placeholder="email" />
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-3">
+                                <label for="patient_contact">Contact</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="number" id="patient_contact" name="patient_contact" class="form-control" placeholder="contact number" />
+                            </div>
+                        </div>
 
-                                <div class="row form-group">
-                                    <div class="col-md-3">
-                                        <label for="patient_email">Email</label>
-                                    </div>
-                                    <div class="col-md-9">
-                                        <input type="email" id="patient_email" name="patient_email" class="form-control" placeholder="email" />
-                                    </div>
-                                </div>
-                                <div class="row form-group">
-                                    <div class="col-md-3">
-                                        <label for="patient_contact">Contact</label>
-                                    </div>
-                                    <div class="col-md-9">
-                                        <input type="number" id="patient_contact" name="patient_contact" class="form-control" placeholder="contact number" />
-                                    </div>
-                                </div>
+                        <!-- <div class="row form-group">
+                            <div class="col-md-3">
+                                <label for="admin_email">department id</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="email" id="admin_email" name="admin_email" class="form-control" placeholder="Email" />
+                            </div>
+                        </div>-->
 
-                                <!-- <div class="row form-group">
-                                    <div class="col-md-3">
-                                        <label for="admin_email">department id</label>
-                                    </div>
-                                    <div class="col-md-9">
-                                        <input type="email" id="admin_email" name="admin_email" class="form-control" placeholder="Email" />
-                                    </div>
-                                </div>-->
+                        <div class="row form-group">
+                            <div class="col-md-3">
+                                <label for="patient_dob">date of birth</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="date" id="patient_dob" name="patient_dob" class="form-control" placeholder="Date of Birth" />
+                            </div>
+                        </div>
 
-                                <div class="row form-group">
-                                    <div class="col-md-3">
-                                        <label for="patient_dob">date of birth</label>
-                                    </div>
-                                    <div class="col-md-9">
-                                        <input type="date" id="patient_dob" name="patient_dob" class="form-control" placeholder="Date of Birth" />
-                                    </div>
-                                </div>
-
-                                <!-- <div class="row form-group">
-                                    <div class="col-md-3">
-                                        <label for="admin_dob">Role Id</label>
-                                    </div>
-                                    <div class="col-md-9">
-                                        <input type="date" id="admin_dob" name="admin_dob" class="form-control" placeholder="Date of Birth" />
-                                    </div>
-                                </div>-->
-                                <div class="row form-group">
-                                    <div class="col-md-3">
-                                        <label for="patient_bloodgroup">Blood group</label>
-                                    </div>
-                                    <div class="col-md-9">
-                                        <input type="text" id="patient_bloodgroup" name="patient_bloodgroup" class="form-control" placeholder="blood group" />
-                                    </div>
-                                </div>
+                        <!-- <div class="row form-group">
+                            <div class="col-md-3">
+                                <label for="admin_dob">Role Id</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="date" id="admin_dob" name="admin_dob" class="form-control" placeholder="Date of Birth" />
+                            </div>
+                        </div>-->
+                        <div class="row form-group">
+                            <div class="col-md-3">
+                                <label for="patient_bloodgroup">Blood group</label>
+                            </div>
+                            <div class="col-md-9">
+                                <input type="text" id="patient_bloodgroup" name="patient_bloodgroup" class="form-control" placeholder="blood group" />
+                            </div>
+                        </div>
 
 
 
-                                <div class="row form-group">
-                                    <div class="col-md-3">
-                                        <label for="patient_addCity">Address: City</label>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input type="text" id="patient_addCity" name="patient_addCity" class="form-control" placeholder="City" />
-                                    </div>
-                                    <div class="col-md-2">
-                                        <label for="doctor_addState">State</label>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <input type="text" id="patient_addState" name="patient_addState" class="form-control" placeholder="State" />
-                                    </div>
-                                </div>
+                        <div class="row form-group">
+                            <div class="col-md-3">
+                                <label for="patient_addCity">Address: City</label>
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" id="patient_addCity" name="patient_addCity" class="form-control" placeholder="City" />
+                            </div>
+                            <div class="col-md-2">
+                                <label for="doctor_addState">State</label>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" id="patient_addState" name="patient_addState" class="form-control" placeholder="State" />
+                            </div>
+                        </div>
 
-                                <div class="row form-group">
-                                    <div class="col-md-3">
-                                        <label for="patient_addCountry">Country</label>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input type="text" id="patient_addCountry" name="patient_addCountry" class="form-control" placeholder="Country" />
-                                    </div>
-                                    <div class="col-md-2">
-                                        <label for="patient_addPin">Pin</label>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <input type="number" id="patient_addPin" name="patient_addPin" class="form-control" placeholder="Pin" />
-                                    </div>
-                                </div>
+                        <div class="row form-group">
+                            <div class="col-md-3">
+                                <label for="patient_addCountry">Country</label>
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" id="patient_addCountry" name="patient_addCountry" class="form-control" placeholder="Country" />
+                            </div>
+                            <div class="col-md-2">
+                                <label for="patient_addPin">Pin</label>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="number" id="patient_addPin" name="patient_addPin" class="form-control" placeholder="Pin" />
+                            </div>
+                        </div>
 
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <button type="button" class="btn btn-primary">Add Patient</button>
-                                    </div>
-                                </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <button type="button" class="btn btn-primary">Add Patient</button>
+                            </div>
+                        </div>
 
-                                <!-- <div class="row form-group">
-                                    <div class="col-md-4">
-                                        <button type="button" class="btn btn-block btn-primary" name="admin_profile_edit"><i class="fa fa-edit"></i> Edit Profile</button>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <button type="button" class="btn btn-block btn-primary" name="admin_password_edit"><i class="fa fa-edit"></i> Change Password</button>
-                                    </div>
-                                </div>-->
+                        <!-- <div class="row form-group">
+                            <div class="col-md-4">
+                                <button type="button" class="btn btn-block btn-primary" name="admin_profile_edit"><i class="fa fa-edit"></i> Edit Profile</button>
+                            </div>
+                            <div class="col-md-4">
+                                <button type="button" class="btn btn-block btn-primary" name="admin_password_edit"><i class="fa fa-edit"></i> Change Password</button>
+                            </div>
+                        </div>-->
+                        <!--               </div>
 
-
-             <!--               </div>
-
-                        </div>  -->
+                                   </div>  -->
 
 
                     </div>
-           <!--         <div class="modal-footer">
-                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Add doctor</button>
-                    </div>  -->
+                    <!--         <div class="modal-footer">
+                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                 <button type="button" class="btn btn-primary">Add doctor</button>
+                             </div>  -->
                 </div>
             </div>
         </div>
@@ -190,6 +184,31 @@
 
 <script>
     $(document).ready(function () {
-        $("#table_doctors").DataTable();
+
+        $("#table_patients").DataTable({
+            "ajax": {
+                type: "GET",
+                url: "/Admin/ShowPatient",
+                dataType: "json",
+                contentType: "application/json"
+            },
+            "columns": [
+                { "data": "PATIENT_ID" },
+                { "data": "PATIENT_NAME" },
+                { "data": "PATIENT_USERNAME" },
+                { "data": "PATIENT_EMAIL" },
+                { "data": "PATIENT_GENDER" },
+                { "data": "PATIENT_CONTACT" },
+                { "data": "PATIENT_DOB" }, { "data": "PATIENT_BLOODGP" },
+
+                { "data": "PATIENT_CITY" },
+                { "data": "PATIENT_STATE" },
+                { "data": "PATIENT_COUNTRY" },
+                { "data": "PATIENT_PIN" },
+                { "data": "PATIENT_ACNT_DATE" },
+                { "data": "ACTIVE" },]
+
+
+        });
     });
 </script>
