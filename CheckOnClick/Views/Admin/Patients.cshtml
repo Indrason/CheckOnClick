@@ -1,12 +1,12 @@
 ﻿@model CheckOnClick.Models.Patient
 @{
-    ViewBag.Title = "Doctors";
+    ViewBag.Title = "Patients";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
 <div class="form-grids row widget-shadow" data-example-id="basic-forms">
     <div class="form-title">
-        <h4>Doctors</h4>
+        <h4>Patients</h4>
     </div>
     <div class="form-body">
         <div class="table-responsive">
@@ -43,135 +43,128 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Add Patient</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
+                        <h5 class="modal-title" id="exampleModalLabel">Add Patient</h5>
+
                     </div>
                     <div class="modal-body">
-                        <!--        <div class="form-grids row widget-shadow" data-example-id="basic-forms">
-                                    <div class="form-title">
-                                        <h4>Add patient</h4>
+                        <form>
+                            <div class="row form-group">
+                                <div class="col-md-3">
+                                    <label for="PATIENT_NAME">Full Name</label>
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.TextBoxFor(a => a.PATIENT_NAME, new { @class = "form-control", @placeholder = "Full Name" })
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <div class="col-md-3">
+                                    <label for="PATIENT_EMAIL">Email</label>
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.TextBoxFor(a => a.PATIENT_EMAIL, new { @class = "form-control", @placeholder = "Email" })
+
+                                </div><br />
+                                <div class="row from-group">
+                                    <div class="col-sm-3">
+                                        <label for="Gender">Gender</label>
                                     </div>
-                                    <div class="form-body fluid">   -->
+                                    <div class="col-sm-3">
+                                        <!--     <input type="radio"> Male   -->
+                                        @Html.RadioButtonFor(a => a.PATIENT_GENDER, "Male") Male
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <!--     <input type="radio"> Female -->
+                                        @Html.RadioButtonFor(a => a.PATIENT_GENDER, "Female") Female
+                                    </div>
 
-                        <div class="row form-group">
-                            <div class="col-md-3">
-                                <label for="patient_fullname">full name</label>
+                                </div>
                             </div>
-                            <div class="col-md-9">
-                                <input type="text" id="patient_fullname" name="patient_fullname" class="form-control" placeholder="Full Name" />
-                            </div>
-                        </div>
+                            <div class="row form-group">
+                                <div class="col-md-3">
+                                    <label for="PATIENT_CONTACT">Contact</label>
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.TextBoxFor(a => a.PATIENT_CONTACT, new { @class = "form-control", @placeholder = "Contact" })
 
-                        <div class="row form-group">
-                            <div class="col-md-3">
-                                <label for="patient_email">Email</label>
+                                </div>
                             </div>
-                            <div class="col-md-9">
-                                <input type="email" id="patient_email" name="patient_email" class="form-control" placeholder="email" />
-                            </div>
-                        </div>
-                        <div class="row form-group">
-                            <div class="col-md-3">
-                                <label for="patient_contact">Contact</label>
-                            </div>
-                            <div class="col-md-9">
-                                <input type="number" id="patient_contact" name="patient_contact" class="form-control" placeholder="contact number" />
-                            </div>
-                        </div>
-
-                        <!-- <div class="row form-group">
-                            <div class="col-md-3">
-                                <label for="admin_email">department id</label>
-                            </div>
-                            <div class="col-md-9">
-                                <input type="email" id="admin_email" name="admin_email" class="form-control" placeholder="Email" />
-                            </div>
-                        </div>-->
-
-                        <div class="row form-group">
-                            <div class="col-md-3">
-                                <label for="patient_dob">date of birth</label>
-                            </div>
-                            <div class="col-md-9">
-                                <input type="date" id="patient_dob" name="patient_dob" class="form-control" placeholder="Date of Birth" />
-                            </div>
-                        </div>
-
-                        <!-- <div class="row form-group">
-                            <div class="col-md-3">
-                                <label for="admin_dob">Role Id</label>
-                            </div>
-                            <div class="col-md-9">
-                                <input type="date" id="admin_dob" name="admin_dob" class="form-control" placeholder="Date of Birth" />
-                            </div>
-                        </div>-->
-                        <div class="row form-group">
-                            <div class="col-md-3">
-                                <label for="patient_bloodgroup">Blood group</label>
-                            </div>
-                            <div class="col-md-9">
-                                <input type="text" id="patient_bloodgroup" name="patient_bloodgroup" class="form-control" placeholder="blood group" />
-                            </div>
-                        </div>
 
 
 
-                        <div class="row form-group">
-                            <div class="col-md-3">
-                                <label for="patient_addCity">Address: City</label>
-                            </div>
-                            <div class="col-md-3">
-                                <input type="text" id="patient_addCity" name="patient_addCity" class="form-control" placeholder="City" />
-                            </div>
-                            <div class="col-md-2">
-                                <label for="doctor_addState">State</label>
-                            </div>
-                            <div class="col-md-4">
-                                <input type="text" id="patient_addState" name="patient_addState" class="form-control" placeholder="State" />
-                            </div>
-                        </div>
+                            <div class="row form-group">
+                                <div class="col-md-3">
+                                    <label for="PATIENT_DOB_IN">DOB</label>
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.TextBoxFor(a => a.PATIENT_DOB_IN, new { @class = "form-control", @placeholder = "Date Of Birth", @type = "date" })
 
-                        <div class="row form-group">
-                            <div class="col-md-3">
-                                <label for="patient_addCountry">Country</label>
+                                </div>
                             </div>
-                            <div class="col-md-3">
-                                <input type="text" id="patient_addCountry" name="patient_addCountry" class="form-control" placeholder="Country" />
-                            </div>
-                            <div class="col-md-2">
-                                <label for="patient_addPin">Pin</label>
-                            </div>
-                            <div class="col-md-4">
-                                <input type="number" id="patient_addPin" name="patient_addPin" class="form-control" placeholder="Pin" />
-                            </div>
-                        </div>
 
-                        <div class="row">
-                            <div class="col-md-4">
-                                <button type="button" class="btn btn-primary">Add Patient</button>
+                            <div class="row form-group">
+                                <div class="col-md-3">
+                                    <label for="PATIENT_BLOODGP">Blood Group</label>
+                                </div>
+                                <div class="col-md-9">
+                                    <!-- input type="text" id="patient_bloodgroup" name="patient_bloodgroup" class="form-control" placeholder="blood group" />-->
+                                    @Html.TextBoxFor(a => a.PATIENT_BLOODGP, new { @class = "form-control", @placeholder = "Blood Group" })
+                                </div>
                             </div>
-                        </div>
-
-                        <!-- <div class="row form-group">
-                            <div class="col-md-4">
-                                <button type="button" class="btn btn-block btn-primary" name="admin_profile_edit"><i class="fa fa-edit"></i> Edit Profile</button>
-                            </div>
-                            <div class="col-md-4">
-                                <button type="button" class="btn btn-block btn-primary" name="admin_password_edit"><i class="fa fa-edit"></i> Change Password</button>
-                            </div>
-                        </div>-->
-                        <!--               </div>
-
-                                   </div>  -->
 
 
+
+                            <div class="row form-group">
+                                <div class="col-md-3">
+                                    <label for="PATIENT_CITY">Address: City</label>
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.TextBoxFor(a => a.PATIENT_CITY, new { @class = "form-control", @placeholder = "City" })
+
+                                </div>
+                                <div class="col-md-2">
+                                    <label for="PATIENT_STATE">State</label>
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(a => a.PATIENT_STATE, new { @class = "form-control", @placeholder = "State" })
+
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <div class="col-md-3">
+                                    <label for="PATIENT_COUNTRY">Country</label>
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.TextBoxFor(a => a.PATIENT_COUNTRY, new { @class = "form-control", @placeholder = "Country" })
+
+                                </div>
+                                <div class="col-md-2">
+                                    <label for="PATIENT_PIN">Pin</label>
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(a => a.PATIENT_PIN, new { @class = "form-control", @placeholder = "Pin" })
+
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-9"><span id="err_pat" style="font-size:12px; color:red;"></span></div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <button type="button" class="btn btn-primary form-control" id="addNewPatient">Add Patient</button>
+                                </div>
+                            </div>
+
+                        </form>
                     </div>
-                    <!--         <div class="modal-footer">
-                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                 <button type="button" class="btn btn-primary">Add doctor</button>
-                             </div>  -->
+
                 </div>
             </div>
         </div>
@@ -199,16 +192,111 @@
                 { "data": "PATIENT_EMAIL" },
                 { "data": "PATIENT_GENDER" },
                 { "data": "PATIENT_CONTACT" },
-                { "data": "PATIENT_DOB" }, { "data": "PATIENT_BLOODGP" },
-
+                { "data": "PATIENT_DOB" },
+                { "data": "PATIENT_BLOODGP" },
                 { "data": "PATIENT_CITY" },
                 { "data": "PATIENT_STATE" },
                 { "data": "PATIENT_COUNTRY" },
                 { "data": "PATIENT_PIN" },
                 { "data": "PATIENT_ACNT_DATE" },
-                { "data": "ACTIVE" },]
+                { "data": "ACTIVE" },
+            ]
 
 
         });
+
     });
+
+
+    // adding new patient script by admin panel
+
+    $('#addNewPatient').click(function () {
+        var valid = true;
+        if ($('#PATIENT_NAME').val() == "") {
+            valid = false;
+        }
+        if ($('#PATIENT_USERNAME').val() == "") {
+            valid = false;
+        }
+        if ($('#PATIENT_EMAIL').val() == "") {
+            valid = false;
+        }
+        if ($('#PATIENT_GENDER:checked').val() == null) {
+            valid = false;
+        }
+        if ($('#PATIENT_CONTACT').val() == "") {
+            valid = false;
+        }
+        if ($('#PATIENT_BloodGP').val() == "") {
+            valid = false;
+        }
+        if ($('#PATIENT_CITY').val() == "") {
+            valid = false;
+        }
+        if ($('#PATIENT_STATE').val() == "") {
+            valid = false;
+        }
+        if ($('#PATIENT_COUNTRY').val() == "") {
+            valid = false;
+        }
+        if ($('#PATIENT_PIN').val() == "") {
+            valid = false;
+        }
+        if ($('#PATIENT_DOB').val() == "") {
+            valid = false;
+        }
+
+        if (valid == false) {
+            $('#err_pat').text('* Please fill all the fields !');
+        }
+        else {
+            $('#err_pat').text('');
+            var data = {
+                "PATIENT_NAME": $('#PATIENT_NAME').val(),
+                "PATIENT_USERNAME": $('#PATIENT_CONTACT').val(),
+                "PATIENT_EMAIL": $('#PATIENT_EMAIL').val(),
+                "PATIENT_GENDER": $('#PATIENT_GENDER:checked').val(),
+                "PATIENT_CONTACT": $('#PATIENT_CONTACT').val(),
+                "PATIENT_DOB_IN": $('#PATIENT_DOB_IN').val(),
+                "PATIENT_BLOODGP": $('#PATIENT_BLOODGP').val(),
+                "PATIENT_CITY": $('#PATIENT_CITY').val(),
+                "PATIENT_STATE": $('#PATIENT_STATE').val(),
+                "PATIENT_COUNTRY": $('#PATIENT_COUNTRY').val(),
+                "PATIENT_PIN": $('#PATIENT_PIN').val()
+
+            };
+
+            $.ajax({
+                type: "POST",
+                url: "/Admin/AddPatient/",
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function (result) {
+                    if (result == "email") {
+                        swal('Warning', 'Patient Email is already exists !', 'warning');
+                    }
+                    else if (result == "username") {
+                        swal('Warning', 'Patient Contact Number is already exists !', 'warning');
+                    }
+                    else if (result == "error") {
+                        swal('Error', 'Problem adding the patient', 'error');
+                    }
+                    else {
+                        swal('Success', 'Patient successfully added with UserName: ' + result + ' And Password: 123456', 'success')
+                            .then((value) => {
+                                location.reload(true);
+                            });
+                    }
+
+                },
+
+                error: function (result) {
+                    swal('Error', 'Something went wrong, Please try again !', 'error');
+                }
+            });
+        }
+    });
+
+
 </script>

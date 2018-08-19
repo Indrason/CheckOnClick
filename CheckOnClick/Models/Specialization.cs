@@ -55,5 +55,28 @@ namespace CheckOnClick.Models
             return cmd.Parameters["@txtStatus"].Value.ToString();
         }
 
+        public DataSet GetSpecDDown()
+        {
+            try
+            {
+                SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["dbconnect"].ConnectionString);
+                string getData = "coc_showSpecsActive";
+
+                SqlCommand cmd = new SqlCommand(getData, con);
+                con.Open();
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                SqlDataAdapter adp = new SqlDataAdapter(cmd);
+                DataSet ds = new DataSet();
+                adp.Fill(ds);
+
+                return ds;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
     }
 }

@@ -1,0 +1,368 @@
+﻿@model CheckOnClick.Models.PatientProfile
+@{
+    ViewBag.Title = "Profile";
+    Layout = "~/Views/Shared/_LayoutPatient.cshtml";
+}
+
+<div class="form-grids row widget-shadow" data-example-id="basic-forms">
+    <div class="form-title">
+        <!--  <button type="button" class="btn btn-info btn-md" style="float: right;" data-toggle="modal" data-target="#editmodal" id="btnEdit"><i class="fa fa-suitcase"></i> Edit Profile</button>-->
+        <h4>My Profile</h4>
+    </div>
+    <div class="form-body">
+        <form>
+            <!--           using (Html.BeginForm("EditPatient", "Patient", FormMethod.Post))
+    // { -->
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-2"><label>Patient Name</label></div>
+                    <div class="col-md-8">
+                        <!--                <input type="text" name="name" id="name" placeholder="Enter Name" class="form-control" required disabled>-->
+                        @Html.TextBoxFor(a => a.Patient_Name, new { @class = "form-control", @placeholder = "Enter Name", @disabled = "disabled" })
+                        @Html.ValidationMessageFor(a => a.Patient_Name)
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-2"><label>User Name</label></div>
+                    <div class="col-md-8">
+                        <!--                <input type="text" name="name" id="name" placeholder="Enter Name" class="form-control" required disabled>-->
+                        @Html.TextBoxFor(a => a.Patient_UserName, new { @class = "form-control", @placeholder = "Enter UserName", @disabled = "disabled" })
+                        @Html.ValidationMessageFor(a => a.Patient_UserName)
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-2"> <label for="exampleInputEmail1">Patient Email</label></div>
+                    <div class="col-md-8">
+                        <!--                   <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" disabled>-->
+                        @Html.TextBoxFor(a => a.Patient_Email, new { @class = "form-control", @placeholder = "Enter Email", @disabled = "disabled" })
+                        @Html.ValidationMessageFor(a => a.Patient_Email)
+                        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-2"><label>Contact</label></div>
+                    <div class="col-md-8">
+                        <!--  <input type="text" name="Patient Contact" placeholder="Enter Contact" class="form-control" required>-->
+                        @Html.TextBoxFor(a => a.Patient_Contact, new { @class = "form-control", @placeholder = "Enter PatientContact", @disabled = "disabled" })
+                        @Html.ValidationMessageFor(a => a.Patient_Contact)
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-2"><label>Date Of Birth</label></div>
+                    <!--  <div class="col-md-6"><input type="date" name="com_drive" class="form-control" required disabled>-->
+                    <div class="col-md-8">
+
+                        @Html.TextBoxFor(a => a.Patient_DOB, new { @class = "form-control", @placeholder = "", @disabled = "disabled" })
+                        @Html.ValidationMessageFor(a => a.Patient_DOB)
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-2"><label for="exampleSelect1">Blood Group</label></div>
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(a => a.Patient_BloodGP, new { @class = "form-control", @placeholder = "", @disabled = "disabled" })
+                        @Html.ValidationMessageFor(a => a.Patient_BloodGP)
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-2"><label>Address: City</label></div>
+                    <div class="col-md-3">
+                        <!--<input type="text" name="name" id="name" placeholder="Enter City" class="form-control" required>-->
+                        @Html.TextBoxFor(a => a.Patient_City, new { @class = "form-control", @placeholder = "Enter City", @disabled = "disabled" })
+                        @Html.ValidationMessageFor(a => a.Patient_City)
+                    </div>
+                    <div class="col-md-2"><label>State</label></div>
+                    <div class="col-md-3">
+                        <!--<input type="text" name="name" id="name" placeholder="Enter State" class="form-control" required disabled>-->
+                        @Html.TextBoxFor(a => a.Patient_State, new { @class = "form-control", @placeholder = "Enter State", @disabled = "disabled" })
+                        @Html.ValidationMessageFor(a => a.Patient_State)
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-2"><label>Country</label></div>
+                    <div class="col-md-3">
+                        <!--<input type="text" name="name" id="name" placeholder="Enter Country" class="form-control" required disabled>-->
+                        @Html.TextBoxFor(a => a.Patient_Country, new { @class = "form-control", @placeholder = "Enter Country", @disabled = "disabled" })
+                        @Html.ValidationMessageFor(a => a.Patient_Country)
+                    </div>
+                    <div class="col-md-2"><label>Pincode</label></div>
+                    <div class="col-md-3">
+                        <!--<input type="text" name="name" id="name" placeholder="Enter Pincode" class="form-control" required disabled>-->
+                        @Html.TextBoxFor(a => a.Patient_Pin, new { @class = "form-control", @placeholder = "Enter Pincode", @disabled = "disabled" })
+                        @Html.ValidationMessageFor(a => a.Patient_Pin)
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group" hidden>
+                <div class="row">
+                    <div class="col-md-2"> <label for="exampleInputFile">Upload Documents:</label></div>
+                    <div class="col-md-3">
+                        <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp">
+                        <small id="fileHelp" class="form-text text-muted">Upload .pdf,.doc files only.</small>
+                    </div>
+                </div>
+            </div>
+          
+            <div class="row form-group">
+                <div class="col-md-4" id="edit_div">
+                    <!--  <button type="button" class="btn btn-info btn-md" style="float: right;" data-toggle="modal" data-target="#editmodal" id="btnEdit"><i class="fa fa-edit"></i> Edit Profile</button>-->
+                    <button type="button" class="btn btn-block btn-primary" name="admin_profile_edit" id="btnEdit"><i class="fa fa-edit"></i> Edit Profile</button>
+                </div>
+                <div class="col-md-4" id="save_div">
+                    <button type="button" id="btnSubmit" class="btn btn-block btn-success"><i class="fa fa-check"></i>Save Changes</button>
+                </div>
+                <div class="col-md-4">
+                    <button type="button" class="btn btn-block btn-danger" name="password_edit" id="patient_password_edit" data-toggle="modal" data-target="#edit_PatientPassword"><i class="fa fa-lock"></i> Change Password</button>
+                </div>
+            </div>
+
+            </form>
+
+
+            <!-- Modal -->
+            <div class="modal fade" id="edit_PatientPassword" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h5 class="modal-title" id="exampleModalLabel">Change Password</h5>
+
+                        </div>
+                        <div class="modal-body">
+
+                            <form method="post" action="#">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label for="cur_password">Current Password</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <!--                             <input type="password" name="cur_password" id="cur_password" class="form-control" placeholder="Current Password" /> -->
+                                        @Html.PasswordFor(a => a.Patient_Password, new { @class = "form-control", @placeholder = "Current Password" })
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label for="new_password">New Password</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <!--                            <input type="password" name="new_password" id="new_password" class="form-control" placeholder="New Password" /> -->
+                                        @Html.PasswordFor(a => a.Patient_NewPassword, new { @class = "form-control", @placeholder = "New Password" })
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label for="retype_password">Re-Type Password</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <!--                           <input type="password" name="retype_password" id="retype_password" class="form-control" placeholder="Re-Type Password" />   -->
+                                        @Html.PasswordFor(a => a.Patient_RePassword, new { @class = "form-control", @placeholder = "Re-Type Password" })
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <button type="button" name="update_password" id="update_password" class="btn btn-danger form-control"><i class="fa fa-lock"></i> Change Password</button>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+                        <!--                  <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                              <button type="button" class="btn btn-primary">Save changes</button>
+                          </div>  -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Close    -->
+            <script>
+                $("#save_div").hide();
+                $("#btnEdit").click(function (event) {
+                    //Action on clicking Edit Profile button
+                    $("#Patient_Name").removeAttr('disabled');
+                    $("#Patient_Contact").removeAttr('disabled');
+                    $("#Patient_City").removeAttr('disabled');
+                    $("#Patient_State").removeAttr('disabled');
+                    $("#Patient_Country").removeAttr('disabled');
+                    $("#Patient_Pin").removeAttr('disabled');
+                    $("#save_div").show();
+                    $("#checkEdit").show();
+                    $("#edit_div").hide();
+                });
+                $.ajax({
+                    type: "GET",
+                    url: "/Patient/GetProfile",
+                    contentType: "application/json",
+                    dataType: "json",
+                    //    data: {},
+                    success: function (result) {
+                        if (result != null) {
+
+                            /*            $('#Admin_FullName').val(result.Admin_FullName);
+                                        alert(result["Admin_FullName"]);
+                                        alert('success but not...');*/
+                            $.each(result, function (i, v1) {
+
+                                $('#Patient_Name').val(v1.Patient_Name);
+                                $('#Patient_UserName').val(v1.Patient_UserName);
+                                $('#Patient_Email').val(v1.Patient_Email);
+                                $('#Patient_Contact').val(v1.Patient_Contact);
+                                $('#Patient_DOB').val(v1.Patient_DOB);
+                                $('#Patient_BloodGP').val(v1.Patient_BloodGP);
+                                $("#Patient_Gender"[value = v1.Patient_Gender]).attr('checked', true);
+                                $('#Patient_City').val(v1.Patient_City);
+                                $('#Patient_State').val(v1.Patient_State);
+                                $('#Patient_Country').val(v1.Patient_Country);
+                                $('#Patient_Pin').val(v1.Patient_Pin);
+                            });
+
+                        }
+                        else {
+                            alert('Something went wrong');
+                        }
+                    },
+                    failure: function () {
+                        alert('Failure');
+                    },
+                    error: function () {
+                        alert('error');
+                    }
+                });
+
+
+                //Action on clicking Submit button
+                $('#btnSubmit').click(function () {
+
+                    var valid = true;
+                    if ($('#Patient_Name').val() == '') {
+                        valid = false;
+                    }
+                    if ($('#Patient_Contact').val() == '') {
+                        valid = false;
+                    }
+                    if ($('#Patient_City').val() == '') {
+                        valid = false;
+                    }
+                    if ($('#Patient_State').val() == '') {
+                        valid = false;
+                    }
+                    if ($('#Patient_Country').val() == '') {
+                        valid = false;
+                    }
+                    if ($('#Patient_Pin').val() == '') {
+                        valid = false;
+                    }
+                    if (valid == false) {
+                        alert('Please fill all the fields');
+                    }
+                    else {
+                        var data = {
+                            "Patient_Name": $('#Patient_Name').val(),
+                            "Patient_Contact": $('#Patient_Contact').val(),
+                            "Patient_City": $('#Patient_City').val(),
+                            "Patient_State": $('#Patient_State').val(),
+                            "Patient_Country": $('#Patient_Country').val(),
+                            "Patient_Pin": $('#Patient_Pin').val()
+                        };
+                        $.ajax({
+                            type: "POST",
+                            url: "/Patient/UpdateProfile",
+                            dataType: "json",
+                            contentType: "application/json",
+                            data: JSON.stringify(data),
+                            success: function (result) {
+                                alert('Successfully Updated !');
+                                location.reload(true);
+                            },
+                            failure: function (result) {
+                                alert('Something went wrong: failure');
+                            },
+                            error: function (result) {
+                                alert('Something went wrong: error');
+                            }
+                        });
+                    }
+                });
+                $('#update_password').click(function () {
+                    var valid = true;
+                    if ($('#Patient_Password').val() == "") {
+                        valid = false;
+                    }
+                    if ($('#Patient_NewPassword').val() == "") {
+                        valid = false;
+                    }
+                    if ($('#Patient_RePassword').val() == "") {
+                        valid = false;
+                    }
+                    if ($('#Patient_NewPassword').val() != null && $('#Patient_RePassword').val() != null && $('#Patient_NewPassword').val() != $('#Patient_RePassword').val()) {
+                        alert('Passwords are mismatched');
+                        valid = false;
+                    }
+
+                    if (valid == false) {
+                        alert('Please fill all the fields');
+                    }
+                    else {
+                        var data = {
+                            "Patient_Password": $('#Patient_Password').val(),
+                            "Patient_NewPassword": $('#Patient_NewPassword').val()
+                        };
+
+                        $.ajax({
+                            type: "POST",
+                            url: "/Patient/UpdatePatientPassword",
+                            dataType: "json",
+                            contentType: "application/json",
+                            data: JSON.stringify(data),
+                            success: function (result) {
+                                if (result == 'notMatch') {
+                                    alert('Current Password is incorrect');
+                                }
+                                else if (result == 'saved') {
+                                    alert('Password successfully changed');
+                                }
+                                else {
+                                    alert('Something went wrong');
+                                }
+                                location.reload(true);
+
+
+                            },
+                            error: function (result) {
+                                alert('Problem changing the password, please try again !');
+                            }
+                        });
+                    }
+                });
+
+            </script>
+
+</div>
+
+</div>
+

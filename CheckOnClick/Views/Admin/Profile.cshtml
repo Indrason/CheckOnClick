@@ -12,103 +12,101 @@
 
         <form method="post">
 
-        <div class="row form-group">
-            <div class="col-md-2">
-                <label for="admin_fullName">Full Name</label>
+            <div class="row form-group">
+                <div class="col-md-2">
+                    <label for="admin_fullName">Full Name</label>
+                </div>
+                <div class="col-md-8">
+                    @Html.TextBoxFor(a => a.Admin_FullName, new { @class = "form-control", @placeholder = "Full Name", @disabled = "disabled" })
+                </div>
             </div>
-            <div class="col-md-8">
-  <!--              <input type="text" id="admin_fullName" name="admin_fullName" class="form-control" placeholder="Full Name" disabled />   -->
-                @Html.TextBoxFor(a => a.Admin_FullName, new { @class = "form-control", @placeholder = "Full Name", @disabled = "disabled" })
-            </div>
-        </div>
 
-        <div class="row form-group">
-            <div class="col-md-2">
-                <label for="admin_userName">User Name</label>
+            <div class="row form-group">
+                <div class="col-md-2">
+                    <label for="admin_userName">User Name</label>
+                </div>
+                <div class="col-md-8">
+                    @Html.TextBoxFor(a => a.Admin_UserName, new { @class = "form-control", @placeholder = "User Name", @disabled = "disabled" })
+                </div>
             </div>
-            <div class="col-md-8">
-   <!--             <input type="text" id="admin_userName" name="admin_userName" class="form-control" placeholder="User Name" disabled />   -->
-                @Html.TextBoxFor(a => a.Admin_UserName, new { @class = "form-control", @placeholder = "User Name", @disabled = "disabled" })
-            </div>
-        </div>
 
-        <div class="row form-group">
-            <div class="col-md-2">
-                <label for="admin_email">Email</label>
+            <div class="row form-group">
+                <div class="col-md-2">
+                    <label for="admin_email">Email</label>
+                </div>
+                <div class="col-md-8">
+                    @Html.TextBoxFor(a => a.Admin_Email, new { @class = "form-control", @placeholder = "Email", @disabled = "disabled" })
+                </div>
             </div>
-            <div class="col-md-8">
-   <!--             <input type="email" id="admin_email" name="admin_email" class="form-control" placeholder="Email" disabled />    -->
-                @Html.TextBoxFor(a => a.Admin_Email, new { @class = "form-control", @placeholder = "Email", @disabled = "disabled" })
-            </div>
-        </div>
 
-        <div class="row form-group">
-            <div class="col-md-2">
-                <label for="admin_contact">Contact Number</label>
+            <div class="row form-group">
+                <div class="col-md-2">
+                    <label for="admin_contact">Contact Number</label>
+                </div>
+                <div class="col-md-8">
+                    @Html.TextBoxFor(a => a.Admin_Contact, new { @class = "form-control", @placeholder = "Contact Number", @disabled = "disabled" })
+                </div>
             </div>
-            <div class="col-md-8">
-   <!--             <input type="text" id="admin_contact" name="admin_contact" class="form-control" placeholder="Contact Number" disabled />    -->
-                @Html.TextBoxFor(a => a.Admin_Contact, new { @class = "form-control", @placeholder = "Contact Number", @disabled = "disabled" })
-            </div>
-        </div>
 
-        <div class="row form-group">
-            <div class="col-md-2">
-                <label for="admin_dob">Date of Birth</label>
+            <div class="row form-group">
+                <div class="col-md-2">
+                    <label for="admin_dob">Date of Birth</label>
+                </div>
+                <div class="col-md-8">
+                    @Html.TextBoxFor(a => a.Admin_DOB, new { @class = "form-control", @placeholder = "Date of Birth", @disabled = "disabled" })
+                </div>
             </div>
-            <div class="col-md-8">
-    <!--            <input type="date" id="admin_dob" name="admin_dob" class="form-control" placeholder="Date of Birth" disabled /> -->
-                @Html.TextBoxFor(a => a.Admin_DOB, new { @class = "form-control", @placeholder = "Date of Birth", @disabled = "disabled" })
-            </div>
-        </div>
 
-        <div class="row form-group">
-            <div class="col-md-2">
-                <label for="admin_addCity">Address: City</label>
+            <div class="row form-group">
+                <div class="col-md-2">
+                    <label for="admin_addCity">Address: City</label>
+                </div>
+                <div class="col-md-3">
+                    @Html.TextBoxFor(a => a.Admin_City, new { @class = "form-control", @placeholder = "City", @disabled = "disabled" })
+                </div>
+                <div class="col-md-2">
+                    <label for="admin_addState">State</label>
+                </div>
+                <div class="col-md-3">
+                    @Html.TextBoxFor(a => a.Admin_State, new { @class = "form-control", @placeholder = "State", @disabled = "disabled" })
+                </div>
             </div>
-            <div class="col-md-3">
-    <!--            <input type="text" id="admin_addCity" name="admin_addCity" class="form-control" placeholder="City" disabled />  -->
-                @Html.TextBoxFor(a => a.Admin_City, new { @class = "form-control", @placeholder = "City", @disabled = "disabled" })
-            </div>
-            <div class="col-md-2">
-                <label for="admin_addState">State</label>
-            </div>
-            <div class="col-md-3">
-     <!--           <input type="text" id="admin_addState" name="admin_addState" class="form-control" placeholder="State" disabled />   -->
-                @Html.TextBoxFor(a => a.Admin_State, new { @class = "form-control", @placeholder = "State", @disabled = "disabled" })
-            </div>
-        </div>
 
-        <div class="row form-group">
-            <div class="col-md-2">
-                <label for="admin_addCountry">Country</label>
+            <div class="row form-group">
+                <div class="col-md-2">
+                    <label for="admin_addCountry">Country</label>
+                </div>
+                <div class="col-md-3">
+                    @Html.TextBoxFor(a => a.Admin_Country, new { @class = "form-control", @placeholder = "Country", @disabled = "disabled" })
+                </div>
+                <div class="col-md-2">
+                    <label for="admin_addPin">Pin</label>
+                </div>
+                <div class="col-md-3">
+                    @Html.TextBoxFor(a => a.Admin_Pin, new { @class = "form-control", @placeholder = "Pin", @disabled = "disabled" })
+                </div>
             </div>
-            <div class="col-md-3">
-     <!--           <input type="text" id="admin_addCountry" name="admin_addCountry" class="form-control" placeholder="Country" disabled /> -->
-                @Html.TextBoxFor(a => a.Admin_Country, new { @class = "form-control", @placeholder = "Country", @disabled = "disabled" })
-            </div>
-            <div class="col-md-2">
-                <label for="admin_addPin">Pin</label>
-            </div>
-            <div class="col-md-3">
-     <!--           <input type="number" id="admin_addPin" name="admin_addPin" class="form-control" placeholder="Pin" disabled />   -->
-                @Html.TextBoxFor(a => a.Admin_Pin, new { @class = "form-control", @placeholder = "Pin", @disabled = "disabled" })
-            </div>
-        </div>
 
-        <div class="row form-group">
-            <div class="col-md-4" id="edit_div">
-                <button type="button" class="btn btn-block btn-primary" name="admin_profile_edit" id="admin_profile_edit"><i class="fa fa-edit"></i> Edit Profile</button>
+            <div class="row form-group">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    <span id="err_profile" style="font-size:12px; color:red;"></span>
+                </div>
             </div>
-            <div class="col-md-4" id="save_div">
-                <button type="button" class="btn btn-block btn-success" name="admin_profile_update" id="admin_profile_update"><i class="fa fa-check"></i> Save Changes</button>
-            </div>
-            <div class="col-md-4">
-                <button type="button" class="btn btn-block btn-primary" name="admin_password_edit" id="admin_password_edit" data-toggle="modal" data-target="#edit_Password"><i class="fa fa-edit"></i> Change Password</button>
-            </div>
-        </div>
 
-      </form>
+            <div class="row form-group">
+                <div class="col-md-4" id="edit_div">
+                    <button type="button" class="btn btn-block btn-primary" name="admin_profile_edit" id="admin_profile_edit"><i class="fa fa-edit"></i> Edit Profile</button>
+                </div>
+                <div class="col-md-4" id="save_div">
+                    <button type="button" class="btn btn-block btn-success" name="admin_profile_update" id="admin_profile_update"><i class="fa fa-check"></i> Save Changes</button>
+                </div>
+                <div class="col-md-4">
+                    <button type="button" class="btn btn-block btn-primary" name="admin_password_edit" id="admin_password_edit" data-toggle="modal" data-target="#edit_Password"><i class="fa fa-edit"></i> Change Password</button>
+                </div>
+            </div>
+
+        </form>
 
 
         <!-- Modal -->
@@ -117,21 +115,20 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-</button>
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                         <h5 class="modal-title" id="exampleModalLabel">Change Password</h5>
-                        
+
                     </div>
                     <div class="modal-body">
-                        
+
                         <form method="post" action="#">
                             <div class="row">
                                 <div class="col-md-4">
                                     <label for="cur_password">Current Password</label>
                                 </div>
-                                <div class="col-md-6">
-       <!--                             <input type="password" name="cur_password" id="cur_password" class="form-control" placeholder="Current Password" /> -->
-                                    @Html.PasswordFor(a => a.Admin_Password, new { @class = "form-control", @placeholder = "Current Password"})
+                                <div class="col-md-8">
+                                    @Html.PasswordFor(a => a.Admin_Password, new { @class = "form-control", @placeholder = "Current Password" })
                                 </div>
                             </div>
 
@@ -139,8 +136,7 @@
                                 <div class="col-md-4">
                                     <label for="new_password">New Password</label>
                                 </div>
-                                <div class="col-md-6">
-        <!--                            <input type="password" name="new_password" id="new_password" class="form-control" placeholder="New Password" /> -->
+                                <div class="col-md-8">
                                     @Html.PasswordFor(a => a.Admin_NewPassword, new { @class = "form-control", @placeholder = "New Password" })
                                 </div>
                             </div>
@@ -149,9 +145,9 @@
                                 <div class="col-md-4">
                                     <label for="retype_password">Re-Type Password</label>
                                 </div>
-                                <div class="col-md-6">
-         <!--                           <input type="password" name="retype_password" id="retype_password" class="form-control" placeholder="Re-Type Password" />   -->
+                                <div class="col-md-8">
                                     @Html.PasswordFor(a => a.Admin_RePassword, new { @class = "form-control", @placeholder = "Re-Type Password" })
+                                    <span id="err_pass" style="font-size:12px; color:red;"></span>
                                 </div>
                             </div>
 
@@ -163,10 +159,6 @@
                         </form>
 
                     </div>
-  <!--                  <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>  -->
                 </div>
             </div>
         </div>
@@ -191,7 +183,7 @@
             if (result != null) {
 
                 $.each(result, function (i, v1) {
-                    
+
                     $('#Admin_FullName').val(v1.Admin_FullName);
                     $('#Admin_UserName').val(v1.Admin_UserName);
                     $('#Admin_Email').val(v1.Admin_Email);
@@ -206,14 +198,17 @@
 
             }
             else {
-                alert('Something went wrong');
+                //alert('Something went wrong');
+                swal('Error', 'Something went wrong !', 'error');
             }
         },
         failure: function () {
-            alert('Failure');
+            //alert('Failure');
+            swal('Error', 'Failure', 'error');
         },
         error: function () {
-            alert('error');
+            //alert('error');
+            swal('Error', 'Error', 'error');
         }
     });
 
@@ -258,10 +253,10 @@
         }
 
         if (valid == false) {
-            alert('Please fill all the fields');
+            $('#err_profile').text('* Please fill all the fields !');
         }
         else {
-
+            $('#err_profile').text('');
             var data = {
                 "Admin_FullName": $('#Admin_FullName').val(),
                 "Admin_Contact": $('#Admin_Contact').val(),
@@ -279,14 +274,16 @@
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 success: function (result) {
-                    alert('Successfully Updated !');
-                    location.reload(true);
+                    swal('Success', 'Successfully Updated !', 'success')
+                        .then((value) => {
+                            location.reload(true);
+                        });
                 },
                 failure: function (result) {
-                    alert('Something went wrong: failure');
+                    swal('Error', 'Something went wrong, Please try again !', 'error');
                 },
                 error: function (result) {
-                    alert('Something went wrong: error');
+                    swal('Error', 'Someting went wrong, Please try again !', 'error');
                 }
             });
         }
@@ -303,15 +300,15 @@
         if ($('#Admin_RePassword').val() == "") {
             valid = false;
         }
-        if ($('#Admin_NewPassword').val() != null && $('#Admin_RePassword').val() != null && $('#Admin_NewPassword').val() != $('#Admin_RePassword').val()) {
-            alert('Passwords are mismatched');
-            valid = false;
-        }
 
         if (valid == false) {
-            alert('Please fill all the fields');
+            $('#err_pass').text('* Please fill all the fields !');
+        }
+        else if ($('#Admin_NewPassword').val() != null && $('#Admin_RePassword').val() != null && $('#Admin_NewPassword').val() != $('#Admin_RePassword').val()) {
+            $('#err_pass').text('* New Password and Re-Type Password are mismatched !');
         }
         else {
+            $('#err_pass').text('');
             var data = {
                 "Admin_Password": $('#Admin_Password').val(),
                 "Admin_NewPassword": $('#Admin_NewPassword').val()
@@ -325,20 +322,22 @@
                 data: JSON.stringify(data),
                 success: function (result) {
                     if (result == 'notMatch') {
-                        alert('Current Password is incorrect');
+                        swal('Error', 'Current Password is incorrect !', 'error');
                     }
                     else if (result == 'saved') {
-                        alert('Password successfully changed');
+                        swal('Success', 'Password successfully changed !', 'success')
+                            .then((value) => {
+                                location.reload(true);
+                            });
                     }
                     else {
-                        alert('Something went wrong');
+                        swal('Error', 'Something went wrong, Please try again !', 'error');
                     }
-                    location.reload(true);
 
 
                 },
                 error: function (result) {
-                    alert('Problem changing the password, please try again !');
+                    swal('Error', 'Problem changing the password, Please try again !', 'error');
                 }
             });
         }

@@ -15,6 +15,10 @@ namespace CheckOnClick.Models
         [Display(Name = "UserName")]
         public string UserName { get; set; }
 
+        [Required(ErrorMessage = "Please enter your username")]
+        [Display(Name = "UserName")]
+        public string UserNameForget { get; set; }
+
         [Required(ErrorMessage = "Please enter your password")]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
@@ -24,7 +28,19 @@ namespace CheckOnClick.Models
         public string FullName { get; set; }
 
         [Display(Name = "UserName")]
+        [StringLength(5, ErrorMessage = "Long Uname")]
         public string PaUserName { get; set; }
+
+        [Required(ErrorMessage = "*")]
+        [DataType(DataType.Password)]
+        [Display(Name = "Password1")]
+        public string Password1 { get; set; }
+
+        [Required(ErrorMessage = "*")]
+        [DataType(DataType.Password)]
+        [Display(Name = "Password2")]
+        public string Password2 { get; set; }
+
 
         [Display(Name = "Gender")]
         public string Gender { get; set; }
@@ -33,6 +49,11 @@ namespace CheckOnClick.Models
         [DataType(DataType.EmailAddress)]
         [Display(Name = "Email Address")]
         public string Email { get; set; }
+
+        [Required(ErrorMessage = "*")]
+        [DataType(DataType.EmailAddress)]
+        [Display(Name = "Email Address")]
+        public string Email1 { get; set; }
 
         [Required(ErrorMessage = "*")]
         [DataType(DataType.PhoneNumber)]
@@ -64,7 +85,7 @@ namespace CheckOnClick.Models
         [DataType(DataType.Password)]
         public string ConfirmPassword { get; set; }
 
-        
+
         // Logging into the system
         public string CheckLogin(string _userName, string _password)
         {
@@ -72,7 +93,7 @@ namespace CheckOnClick.Models
             {
                 SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["dbconnect"].ConnectionString);
 
-                string query = "coc_login";
+                string query = "coc_Login";
 
                 SqlCommand cmd = new SqlCommand(query, con);
                 cmd.CommandType = CommandType.StoredProcedure;
@@ -86,8 +107,10 @@ namespace CheckOnClick.Models
                 cmd.ExecuteNonQuery();
                 con.Close();
 
-                return cmd.Parameters["@txtrole"].Value.ToString();
+                return cmd.Parameters["@txtRole"].Value.ToString();
 
+
+               
             }
 
             catch (Exception ex)
@@ -97,7 +120,7 @@ namespace CheckOnClick.Models
         }
 
         // Creating new account for the patient
-        public string CreatingNewAccount(string _fullname, string _username, string _email, string _contact, string _gender, string _password)
+        public string CreatingNewAccount(string _fullname, string _email, string _contact, string _gender, string _password)
         {
             try
             {
@@ -108,7 +131,7 @@ namespace CheckOnClick.Models
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 cmd.Parameters.AddWithValue("@txtfullname", _fullname);
-                cmd.Parameters.AddWithValue("@txtusername", _username);
+                cmd.Parameters.AddWithValue("@txtusername", _contact);
                 cmd.Parameters.AddWithValue("@txtemail", _email);
                 cmd.Parameters.AddWithValue("@txtgender", _gender);
                 cmd.Parameters.AddWithValue("@txtcontact", _contact);
@@ -128,6 +151,10 @@ namespace CheckOnClick.Models
                 throw ex;
             }
         }
+
+        
+
+
 
     }
 }

@@ -37,10 +37,10 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Add Role</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
+                        <h5 class="modal-title" id="exampleModalLabel">Add Role</h5>
                     </div>
                     <div class="modal-body">
                         <form>
@@ -48,8 +48,9 @@
                                 <div class="col-md-4">
                                     <label class="control-label">Enter Role Name</label>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-7">
                                     @Html.TextBoxFor(a => a.NewRole_Name, new { @class = "form-control", @placeholder = "Role Name" })
+                                    <span id="err_role" style="font-size:12px; color:red;"></span>
                                 </div>
                             </div>
                             <div class="row">
@@ -91,7 +92,7 @@
     // Action when we click Save Role Button
     $('#saveRole').click(function () {
         if ($('#NewRole_Name').val() == '') {
-            alert('Please enter the name of the new role !');
+            $('#err_role').text('* Please enter the name of the new role !');
         }
         else {
             var data = {
@@ -106,21 +107,23 @@
                 data: JSON.stringify(data),
                 success: function (result) {
                     if (result == "exists") {
-                        alert('Already there');
+                        swal('Warning', 'Role already exists !', 'warning');
                     }
                     else if (result == "success") {
-                        alert('Role Added');
+                        swal('Success', 'Role sucessfully added !', 'success')
+                            .then((value) => {
+                                location.reload(true);
+                            });
                     }
 
-                    location.reload(true);
 
                 },
                 error: function (result) {
-                    alert('error');
+                    swal('Error', 'Something went wrong, Please try again !', 'error');
                 }
 
             });
-        }        
+        }
 
     });
 

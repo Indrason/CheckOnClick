@@ -26,7 +26,7 @@ namespace CheckOnClick.Models
         [DataType(DataType.PhoneNumber)]
         public string Admin_Contact { get; set; }
 
-        [DisplayFormat(DataFormatString ="mm/dd/yyyy")]
+        [DisplayFormat(DataFormatString = "mm/dd/yyyy")]
         [DataType(DataType.Date)]
         public DateTime Admin_DOB { get; set; }
 
@@ -133,7 +133,7 @@ namespace CheckOnClick.Models
 
                 return cmd.Parameters["@txtStatus"].Value.ToString();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw ex;
             }
@@ -141,7 +141,7 @@ namespace CheckOnClick.Models
 
 
         // Getting details of the staffs (Doctor)
-       
+
 
     }
 }

@@ -1,0 +1,130 @@
+﻿
+@model CheckOnClick.Models.PatientFeedback
+@{
+    ViewBag.Title = "Feedback";
+    Layout = "~/Views/Shared/_LayoutPatient.cshtml";
+}
+<div class="forms">
+    <div class="form-grids row widget-shadow" data-example-id="basic-forms">
+        <div class="form-title">
+            <h4>Feedback</h4>
+
+        </div>
+        
+        <div class="form-body">
+            <form>
+                <div class="container">
+                    @*<div class="row">
+                    <div class="col-md-2">
+                        <label for="docDept">Department</label>
+                    </div>
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" id="docDept" name="docDept" placeholder="Enter Department Name">
+
+                    </div>*@
+                </div>
+                <div class="row form-group">
+                    <div class="col-md-2"><label for="selectDoc">Select Doctor</label></div>
+                    <div class="col-md-7">
+                        <select id="selectDoc" class="form-control">
+                            <option>-- Select Doctor --</option>
+                        </select>
+                        <span id="bookSlot" style="color:red; font-size:14px"></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-2">
+                        <label for="feedBack">Feedback</label>
+                    </div>
+                    <div class="col-md-7">
+                        <!-- <textarea class="form-control" rows="5" id="feedBack" name="feedBack" placeholder="Enter Feedback"></textarea>-->
+                        @Html.TextAreaFor(d => d.Feedback, new { @class = "form-control", rows = "5", @placeholder = "Give Feedback" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <label for="feedBack">Rating</label>
+                    </div>
+                    <div class="col-md-7">
+                        @Html.RadioButtonFor(d => d.Rating, "1") Strongly Disagree &nbsp;
+                        @Html.RadioButtonFor(d => d.Rating, "2") Disagree &nbsp;
+                        @Html.RadioButtonFor(d => d.Rating, "3") Average &nbsp;
+                        @Html.RadioButtonFor(d => d.Rating, "4") Agree &nbsp;
+                        @Html.RadioButtonFor(d => d.Rating, "5") Strongly Agree &nbsp;
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 center-block"></div>
+                    <div class="col-md-3 center-block">
+                        <button class="btn btn-success form-control center-block" type="button" name="btnFeed" id="btnFeed">Submit</button>
+                    </div>
+                    <div class="col-md-6 center-block"></div>
+                </div>
+            </form>
+        </div>
+
+
+    </div>
+</div>
+
+<script>
+    $('#btnFeed').click(function () {
+
+        var valid = true;
+        if ($('#selectDoc option:selected').val() == '') {
+            valid = false;
+        }
+        if ($('#Feedback').val() == '') {
+            valid = false;
+        }
+        if ($('#Rating:checked').val() == null) {
+            valid = false;
+        }
+
+        if (valid == false) {
+            alert('Please fill all the fields');
+        }
+        else {
+            var data = {
+                "DoctorId": $('#selectDoc').val(),
+                "Feedback": $('#Feedback').val(),
+                "Rating": $('#Rating:checked').val()
+            };
+            $.ajax({
+                type: "POST",
+                url: "/Patient/FeedbackPatient",
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function (result) {
+                    if (result == 'saved') {
+                        alert('Successfully saved');
+                    }
+                    location.reload(true);
+                },
+                failure: function (result) {
+                    alert('Something went wrong: failure');
+                },
+                error: function (result) {
+                    alert('Something went wrong: error');
+                }
+            });
+        }
+    });
+
+    $.get("/Patient/FeedbackPat", function (data) {
+        var opt = '<option>-- Select Doctor --</option>';
+        $.each(data, function (i, v1) {
+            opt += '<option value="' + v1.Value + '">' + v1.Text + '</option>';
+        });
+
+        $('#selectDoc').html(opt);
+    });
+
+
+
+</script>
+
+

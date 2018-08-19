@@ -1,0 +1,67 @@
+﻿@model CheckOnClick.Models.DoctorProfile
+
+@{
+    ViewBag.Title = "AppointHistory";
+    Layout = "~/Views/Shared/_LayoutDoctor.cshtml";
+}
+
+
+<div class="form-grids row widget-shadow" data-example-id="basic-forms">
+    <div class="form-title">
+        <h4>Appointment History</h4>
+    </div>
+    <div class="form-body">
+        <div class="table-responsive">
+            <table id="myTable" class="table">
+                <thead class="bg-info">
+                    <tr>
+                        <th>Appointment Id</th>
+                        <th>Patient Name</th>
+                        <th>Schedule Date</th>
+                        <th>Schedule Time</th>
+                        <th>Booked Date</th>
+                        <th>Appointment Description</th>
+                        <th>Prescription</th>
+                        <th>Medicine</th>
+
+                    </tr>
+                </thead>
+
+            </table>
+        </div>
+    </div>
+</div>
+
+<!--    //Bootstrap Core JavaScript -->
+<!--data table link-->
+<link rel="stylesheet" type="text/css" href="/DataTable/datatables.min.css">
+<script type="text/javascript" charset="utf8" src="/DataTables/datatables.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#myTable').DataTable({
+            "ajax": {
+                "url": "/Doctor/appointmenthistory",
+                "type": "GET",
+                "datatype": "json"
+
+            },
+            "columns": [
+                { "data": "APPOINT_ID", "autowidth": true },
+                { "data": "PATIENT_NAME", "autowidth": true },
+                { "data": "SCHEDULE_DATE", "autowidth": true },
+                { "data": "SCHEDULE_TIME", "autowidth": true },
+        
+                { "data": "BOOKED_DATE", "autowidth": true },
+                { "data": "APPOINT_DESC", "autowidth": true },
+                { "data": "PRESCRIPTION", "autowidth": true },
+                { "data": "MEDICINE", "autowidth": true },
+            ]
+        });
+
+
+    });
+</script>
+
+
+

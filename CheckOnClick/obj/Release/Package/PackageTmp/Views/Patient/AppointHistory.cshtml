@@ -1,0 +1,74 @@
+﻿
+@model System.Data.DataTable
+@{
+    ViewBag.Title = "Appointment History";
+    Layout = "~/Views/Shared/_LayoutPatient.cshtml";
+}
+<div class="form-grids row widget-shadow" data-example-id="basic-forms">
+    <div class="form-title">
+        <h4>Appointment History</h4>
+    </div>
+    <div class="form-body">
+        <div class="table table-responsive">
+            <table id="myTable">
+                <thead class="bg-info">
+                    <tr>
+                        <th>S.No</th>
+                        <th>Appointment ID</th>
+                        <th>Doctor Name</th>
+                        <th>Schedule Date</th>
+                        <th>Schedule Time</th>
+
+                        <th>Booked Date</th>
+                        <th>Appointment Description</th>
+                        <th>Status</th>
+                        <th>Doctor Prescription</th>
+                        <th>Medicine</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        int i = 1;
+                    }
+                    @foreach (System.Data.DataRow row in Model.Rows)
+
+                    {
+
+                        <tr>
+                            <td>@i</td>
+                            @foreach (var cell in row.ItemArray)
+                            {
+
+                                if (cell != null)
+                                {
+                                    <td>@cell.ToString()</td>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
+
+                            }
+                        </tr>
+                        i = i + 1;
+
+                    }
+
+
+
+
+                </tbody>
+
+
+            </table>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#myTable').DataTable();
+    });
+
+</script>
+

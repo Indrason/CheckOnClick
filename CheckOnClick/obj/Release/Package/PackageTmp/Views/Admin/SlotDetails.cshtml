@@ -1,0 +1,162 @@
+﻿@model CheckOnClick.Models.Slots
+@{
+    ViewBag.Title = "Slot Details";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="form-grids row widget-shadow" data-example-id="basic-forms">
+    <div class="form-title">
+        <h4>Slot Details</h4>
+    </div>
+    <div class="form-body">
+
+        <div class="table-responsive">
+            <table id="table_slots">
+                <thead class="bg-info">
+                    <tr>
+                        <th>Slot Id</th>
+                        <th>Doctor Id</th>
+                        <th>Doctor Name</th>
+                        <th>Duty From</th>
+                        <th>Duty To</th>
+                        <th>Active</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-md-4">
+                    <button type="button" class="btn btn-primary form-control" data-toggle="modal" data-target="#addSlotsModal">Add Slots</button>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+
+
+    <!-- Models Start for Adding Slots -->
+
+    <div class="modal" id="addSlotsModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h5 class="modal-title">Add Slots</h5>
+                    <hr />
+                    <div class="modal-body">
+                        <form>
+                            <div class="row form-group">
+                                <div class="col-md-3"><label for="docName">Doctor Name</label></div>
+                                <div class="col-md-9">
+                                    <select id="docForSlot" class="form-control">
+                                        <option>--- Select Doctor ---</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <div class="col-md-3"><label for="Slot_From">Duty: From</label></div>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(a => a.Slot_From, new { @class = "form-control", @placeholder = "HH:MM AM/PM" })
+                                </div>
+                                <div class="col-md-1"><label for="Slot_To">To</label></div>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(a => a.Slot_To, new { @class = "form-control", @placeholder = "HH:MM AM/PM" })
+                                </div>
+                            </div>
+
+
+
+                            <div class="row form-group">
+                                <div class="col-md-4">
+                                    <button class="btn btn-success form-control" type="button" id="btnSaveSlot">Save Slots</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Close-->
+
+</div>
+
+<script type="text/javascript">
+
+    $('#table_slots').DataTable({
+        "ajax": {
+            type: "GET",
+            url: "/Admin/ShowSlots",
+            dataType: "json",
+            contentType: "application/json"
+        },
+        "columns": [
+            { "data": "Slot_Id" },
+            { "data": "Doctor_Id" },
+            { "data": "Doctor_Name" },
+            { "data": "Slot_From" },
+            { "data": "Slot_To" },
+            { "data": "Active" },
+        ]
+    });
+
+    $.get('/Admin/ShowDoctorForSlot', function (data) {
+        var opt = '<option>--- Select Doctor ---</option>';
+
+        $.each(data, function (i, v1) {
+            opt += '<option value="' + v1.Value + '">' + v1.Text + '</option>';
+        });
+
+        $('#docForSlot').html(opt);
+    });
+
+    $('#btnSaveSlot').click(function () {
+        var valid = true;
+        if ($('#docForSlot').val() == null) {
+            valid = false;
+        }
+        if ($('#Slot_From').val() == "") {
+            valid = false;
+        }
+        if ($('#Slot_To').val() == "") {
+            valid = false;
+        }
+        if (valid == false) {
+            alert('Please fill all the fields !');
+        }
+        else {
+            var data = {
+                "Doctor_Id": $('#docForSlot option:selected').val(),
+                "Slot_From": $('#Slot_From').val(),
+                "Slot_To": $('#Slot_To').val()
+            };
+
+            $.post('/Admin/SaveSlots', data, function (data) {
+                if (data == 'saved') {
+                    alert('Slot successfully saved !');
+                }
+                else if (data == 'error') {
+                    alert('Something went wrong, Please try again !');
+                }
+                else {
+                    alert('Problem saving the slot, Please try again !');
+                }
+
+                location.reload(true);
+            });
+            
+        }
+    });
+</script>
+
+

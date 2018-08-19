@@ -4,13 +4,103 @@
     Layout = "~/Views/Shared/_LayoutDoctor.cshtml";
 }
 
-<div class="form-grids row widget-shadow" data-example-id="basic-forms">
-    <div class="form-title">
-        <h4>Share Post</h4>
-    </div>
-    <div class="form-body">
-        Body
-    </div>
+<div class="forms">
+    <div class="form-grids row widget-shadow" data-example-id="basic-forms">
+        <div class="form-title">
+            <h4>Share Post</h4>
+        </div>
+        <div class="form-body">
+            <form method="post" id="formPost">
 
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label for="postTitle">Title</label>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" name="postTitle" id="postTitle" placeholder="Enter a title" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label for="postBody">Post</label>
+                        </div>
+                        <div class="col-md-6">
+                            <textarea class="form-control" name="postBody" id="postBody" rows="4" placeholder="Write your post here"></textarea>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label for="tags">Tags</label>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" name="tags" id="tags" placeholder="Enter comma separated tags" />
+                            <span style="font-size: 12px; color: red" id="post_err"></span>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3 center-block">
+
+                            <button class="btn btn-primary form-control center-block" type="submit" id="btnpost" name="btnpost">Post Now</button>
+                        </div>
+                    </div>
+
+                </div>
+
+            </form>
+        </div>
+    </div>
 </div>
+<script>
+    //    $('#btnpost').click(function () {
+    $('form#formPost').submit(function (e) {
+        e.preventDefault();
+        var valid = true;
+        if ($('#postTitle').val() == '') {
+            valid = false;
+        }
+        if ($('#postBody').val() == '') {
+            valid = false;
+        }
+        if ($('#tags').val() == "") {
+            valid = false;
+        }
 
+        if (valid == false) {
+            $('#post_err').text('* Please fill all the fields !');
+        }
+        else {
+            $('#post_err').text('');
+            var data = {
+                "postTitle": $('#postTitle').val(),
+                "postBody": $('#postBody').val(),
+                "tags": $('#tags').val()
+            };
+            $.ajax({
+                type: "POST",
+                url: "/Doctor/SavePost",
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function (result) {
+                    if (result == 'saved') {
+                        swal('Success', 'Post successfully saved !', 'success')
+                            .then((value) => {
+                                location.reload(true);
+                            });
+                    }
+                    else if (result == 'notSaved') {
+                        swal('Error', 'Problem saving the post, Please try again !', 'error');
+                    }
+                },
+                error: function (result) {
+                    swal('Error', 'Something went wrong, Please try again !', 'error');
+                }
+            });
+        }
+
+        //   return valid;
+    });
+</script>

@@ -1,0 +1,63 @@
+﻿@{
+    ViewBag.Title = "Query";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div class="form-grids row widget-shadow" data-example-id="basic-forms">
+    <div class="form-title">
+        <h4>Query</h4>
+    </div>
+    <div class="form-body">
+        <div class="table-responsive">
+            <table class="table" id="table_query">
+                <thead class="bg-info">
+                    <tr>
+                        <td>Query ID</td>
+                        <td>user Id</td>
+                        <td>Name</td>
+                        <td>Email</td>
+                        <td>Contact</td>
+                        <td>Sent To</td>
+                        <td>Message</td>
+                        <td>Message Date</td>
+
+                        <td>Reply</td>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+
+        $.get('/Admin/FetchAdminQuery', function (data) {
+
+            data = JSON.parse(data);
+            var rows = "";
+
+            for (var i = 0; i < data.Table.length; i++) {
+                var btn = "";
+                if (data.Table[i].REPLY == null && data.Table[i].TARGET == "admin") {
+                    btn = '<button type="button" class="btn btn-primary btn-sm" onclick="replyQuery(' + data.Table[i].QUERY_ID + ')">Reply Now</button>';
+                }
+                else if (data.Table[i].REPLY != null && data.Table[i].TARGET != "admin") {
+                    btn = data.Table[i].REPLY;
+                }
+                else {
+                    btn = 'Not Replied yet';
+                }
+                rows += '<tr><td>' + data.Table[i].QUERY_ID + '</td><td>' + data.Table[i].USER_ID + '</td><td>' + data.Table[i].NAME + '</td><td>' + data.Table[i].EMAIL + '</td><td>' + data.Table[i].CONTACT + '</td><td>' + data.Table[i].TARGET + '</td><td>' + data.Table[i].MESSAGE + '</td><td>' + data.Table[i].MESG_DATE + '</td><td>' + btn + '</td></tr>';
+            }
+
+
+
+            $('#table_query tbody').html(rows);
+
+            $('#table_query').DataTable();
+
+        });
+
+    });
+</script>
+

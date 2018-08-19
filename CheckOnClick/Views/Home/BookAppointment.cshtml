@@ -1,0 +1,742 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Book Appointment | Check On Click</title>
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/js2/jquery-1.11.1.min.js"></script>
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/font-awesome.min.css" rel="stylesheet" />
+    <!-- Jquery TimePicker -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+
+    <!--SweetAlert-->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <style type="text/css">
+        body {
+            background-color: #e7e1da;
+        }
+
+        .bookBody {
+            color: black;
+            // padding: 0 4em;
+            padding-bottom: 30px;
+        }
+
+        h1 {
+            color: blue;
+            // padding: 5px 10px;
+            padding: 5px 0;
+            background-color: #95a9f0;
+            border-radius: 20px;
+        }
+
+        .form-body {
+            // padding: 20px 50px;
+            padding: 20px 0;
+            background-color: steelblue;
+            border-radius: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container bookBody">
+        <div class="form-grids row widget-shadow" data-example-id="basic-forms">
+            <div class="form-title">
+                <h1 class="text-center">Book Appointment</h1>
+            </div>
+            <div class="form-body">
+                <div id="bk-appoint">
+                    <div class="row form-group">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-3"><label for="selectDate">Select Date</label></div>
+                        <div class="col-md-7"><input type="date" id="selectDate" class="form-control" /></div>
+                        <div class="col-md-1"></div>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-3"><label for="selectSpec">Select Specialization</label></div>
+                        <div class="col-md-7">
+                            @Html.DropDownList("Specs", null, "-- Select the Specialization --", new { @class = "form-control", @id = "Doc_Spec_Id", @disabled = "disabled" })
+                        </div>
+                        <div class="col-md-1"></div>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-3"><label for="selectDoc">Select Doctor</label></div>
+                        <div class="col-md-7">
+                            <select id="selectDoc" class="form-control" disabled>
+                                <option>-- Select Doctor --</option>
+                            </select>
+                            <span id="bookSlot" style="color:white; font-size:14px"></span>
+                        </div>
+                        <div class="col-md-1"></div>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-3"><label for="selectSlot">Select Slot</label></div>
+                        <div class="col-md-7">
+                            <input type="text" id="selectSlot" placeholder="-- Click to select Slot -- " class="form-control" readonly />
+                        </div>
+                        <div class="col-md-1"></div>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-3"><label for="patientDesc">Description</label></div>
+                        <div class="col-md-7"><textarea maxlength="130" class="form-control" id="patientDesc" rows="3" placeholder="Describe your problem (max - 130 characters)"></textarea></div>
+                        <div class="col-md-1"></div>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-3"></div>
+                        <div class="col-md-7">
+                            <span id="err" style="color:white; font-size:12px"></span>
+                        </div>
+                        <div class="col-md-1"></div>
+                    </div>
+                </div>
+
+                <div id="contd-option">
+                    <div class="row form-group">
+                        <div class="col-md-1"></div>
+                        <div class="col-10" style="font-size:20px"><strong>How would you like to Proceed ?</strong></div>
+                        <div class="col-md-1"></div>
+
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-md-1"></div>
+                        <div class="col-10">
+                            <input type="radio" name="user" value="guest" id="rad-guest" /> &nbsp;&nbsp;&nbsp;&nbsp; <label for="rad-guest">Continue as Guest</label>
+                        </div>
+                        <div class="col-md-1"></div>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col-md-1"></div>
+                        <div class="col-10">
+                            <input type="radio" name="user" value="sign" id="rad-sign" />  &nbsp;&nbsp;&nbsp;&nbsp; <label for="rad-sign">Sign up to Continue</label>
+                        </div>
+                        <div class="col-md-1"></div>
+                    </div>
+
+
+                </div>
+
+                <div id="form-guest">
+                    <div class="row form-group">
+                        <div class="col-md-1"></div>
+                        <div class="col-10" style="font-size:20px"><strong>Fill your details to proceed ...</strong></div>
+                        <div class="col-md-1"></div>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-3"><label for="Gname">Name</label></div>
+                        <div class="col-md-7"><input type="text" id="Gname" class="form-control" placeholder="Enter Name" /></div>
+                        <div class="col-md-1"></div>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-3"><label for="Gemail">Email</label></div>
+                        <div class="col-md-7"><input type="email" id="Gemail" class="form-control" placeholder="Enter Email" /></div>
+                        <div class="col-md-1"></div>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-3"><label for="Gcontact">Contact Number</label></div>
+                        <div class="col-md-7"><input type="number" id="Gcontact" class="form-control" placeholder="Enter Contact Number" /></div>
+                        <div class="col-md-1"></div>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-3"><label for="Ggender">Gender</label></div>
+                        <div class="col-md-2"><input type="radio" name="Ggender" id="GgenderM" value="Male" /> &nbsp;&nbsp;&nbsp; <label for="GgenderM">Male</label></div>
+                        <div class="col-md-2"><input type="radio" name="Ggender" id="GgenderF" value="Female" /> &nbsp;&nbsp;&nbsp; <label for="GgenderF">Female</label></div>
+                        <div class="col-md-1"></div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-3"></div>
+                        <div class="col-md-7"><span id="err_guest" style="color:white; font-size:12px;"></span></div>
+                        <div class="col-md-1"></div>
+                    </div>
+                </div>
+
+                <div id="form-signin">
+                    <div class="row form-group">
+                        <div class="col-md-1"></div>
+                        <div class="col-10" style="font-size:20px"><strong>Fill your details to create account and proceed ...</strong></div>
+                        <div class="col-md-1"></div>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-3"><label for="Uname">Name</label></div>
+                        <div class="col-md-7"><input type="text" id="Uname" class="form-control" placeholder="Enter Name" /></div>
+                        <div class="col-md-1"></div>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-3"><label for="Uemail">Email</label></div>
+                        <div class="col-md-7"><input type="email" id="Uemail" class="form-control" placeholder="Enter Email" /></div>
+                        <div class="col-md-1"></div>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-3"><label for="Ucontact">Contact Number</label></div>
+                        <div class="col-md-7"><input type="number" id="Ucontact" class="form-control" placeholder="Enter Contact Number" /></div>
+                        <div class="col-md-1"></div>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-3"><label for="Ugender">Gender</label></div>
+                        <div class="col-md-2"><input type="radio" name="Ugender" id="UgenderM" value="Male" /> &nbsp;&nbsp;&nbsp; <label for="UgenderM">Male</label></div>
+                        <div class="col-md-2"><input type="radio" name="Ugender" id="UgenderF" value="Female" /> &nbsp;&nbsp;&nbsp; <label for="UgenderF">Female</label></div>
+                        <div class="col-md-1"></div>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-3"><label for="UPasword">Password</label></div>
+                        <div class="col-md-7"><input type="password" id="UPassword" class="form-control" placeholder="Create Password" /></div>
+                        <div class="col-md-1"></div>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-3"><label for="UCPass">Confirm Password</label></div>
+                        <div class="col-md-7"><input type="password" id="UCPass" class="form-control" placeholder="Confirm Password" /></div>
+                        <div class="col-md-1"></div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-3"></div>
+                        <div class="col-md-7"><span id="err_user" style="color:white; font-size:12px;"></span></div>
+                        <div class="col-md-1"></div>
+                    </div>
+                </div>
+
+                <div id="form-otp">
+                    <div class="row form-group">
+                        <div class="col-md-1"></div>
+                        <div class="col-10" style="font-size:20px"><strong>Verify here to confirm booking ...</strong></div>
+                        <div class="col-md-1"></div>
+                    </div>
+
+                    <div class="row form-group">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-3"><label for="OTP_field">Enter One Time Password</label></div>
+                        <div class="col-md-7"><input type="number" id="OTP_field" class="form-control" placeholder="Enter OTP" /></div>
+                        <div class="col-md-1"></div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-3"></div>
+                        <div class="col-md-7"><span id="err_otp" style="color:white; font-size:12px;"></span></div>
+                        <div class="col-md-1"></div>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="row form-group" style="padding: 1em 0;">
+                <div class="col-md-1"></div>
+                <div class="col-md-4">
+                    <a class="btn btn-info form-control" href="@Url.Action("Index","Home")" id="backHome">&larr; GO BACK</a>
+                    <button class="btn btn-info form-control" type="button" id="backAppoint">&larr; GO BACK</button>
+                    <button class="btn btn-info form-control" type="button" id="backMenu">&larr; GO BACK</button>
+                </div>
+                <div class="col-md-4">
+                    <button class="btn btn-primary form-control" type="button" id="btnBook">BOOK NOW &rarr;</button>
+                    <button class="btn btn-primary form-control" type="button" id="btnProceedGuest">PROCEED &rarr;</button>
+                    <button class="btn btn-primary form-control" type="button" id="btnProceedUser">PROCEED &rarr;</button>
+                    <button class="btn btn-primary form-control" type="button" id="btnVerifyOTP">VERIFY &rarr;</button>
+                    <div class="col-md-1"></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+
+        function isEmail(email) {
+            var regex = /^([a-zA-Z0-9_.+-])+\@@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+            return regex.test(email);
+        }
+
+        function checkNumber(phNum) {
+            var pattern = new RegExp(/^[6789]\d{9}$/);
+            return pattern.test(phNum);
+        }
+
+
+        $('#contd-option').hide();
+        $('#btnProceedGuest').hide();
+        $('#backAppoint').hide();
+        $('#form-guest').hide();
+        $('#backMenu').hide();
+        $('#form-signin').hide();
+        $('#btnProceedUser').hide();
+        $('#btnVerifyOTP').hide();
+        $('#form-otp').hide();
+
+        var tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        var dd = tomorrow.getDate();
+        var mm = tomorrow.getMonth() + 1;
+        var yyyy = tomorrow.getFullYear();
+
+        if (mm < 10) {
+            mm = '0' + mm;
+        }
+        if (dd < 10) {
+            dd = '0' + dd;
+        }
+
+        var minDate = yyyy + "-" + mm + "-" + dd;
+
+        $('#selectDate').attr('min', minDate);
+
+        $('#selectDate').on('change', function () {
+            if ($('#selectDate').val() != "") {
+                $('#Doc_Spec_Id').removeAttr('disabled');
+            }
+        });
+
+        $('#Doc_Spec_Id').on('change', function () {
+            if ($('#Doc_Spec_Id option:selected').val() != null) {
+                $('#selectDoc').removeAttr('disabled');
+            }
+
+            var spec_id = $('#Doc_Spec_Id option:selected').val();
+
+            $.get("/Patient/LoadDoctor", { Spec_Id: spec_id }, function (data) {
+                var opt = '<option>-- Select Doctor --</option>';
+                $.each(data, function (i, v1) {
+                    opt += '<option value="' + v1.Value + '">' + v1.Text + '</option>';
+                });
+
+                $('#selectDoc').html(opt);
+            });
+        });
+
+        $('#selectDoc').on('change', function () {
+            var doc_id = $('#selectDoc option:selected').val();
+            var slot_id;
+            var time_from;
+            var time_to;
+            var disableTimeRanges;
+
+            var apointDate = $('#selectDate').val();
+            var bookData = {
+                "AppointDate": apointDate,
+                "Doc_Id": doc_id
+            };
+
+            $.get('/Patient/BookedSlots', bookData, function (result) {
+                if (result != null) {
+                    var bookedResponse = "";
+                    $.each(result, function (i, v1) {
+                        bookedResponse += v1.AppointTime + " ";
+                    });
+
+                    if (bookedResponse == "") {
+                        $('#bookSlot').text('All slots are free.');
+                    }
+                    else {
+                        $('#bookSlot').text('Some slots are already booked - ' + bookedResponse);
+                    }
+                }
+            });
+
+
+
+            $.get('/Patient/LoadSlots', { Doc_id: doc_id }, function (data) {
+                var opt = '<option>-- Select Slot --</option>';
+                $.each(data, function (i, v1) {
+                    slot_id = v1.Slot_Id;
+                    time_from = v1.Slot_From;
+                    time_to = v1.Slot_To;
+                    //        disableTimeRanges = "[['9:00am', '9:21am'], ['10:20am', '10:41am']]";
+                });
+
+                if (time_from != null && time_to != null) {
+                    $('#selectSlot').timepicker({
+                        timeFormat: 'hh:mm p',
+                        minTime: time_from,
+                        maxTime: time_to,
+                        interval: 20,
+                        //            disableTimeRanges: [['09:00 AM', '09:21 AM'], ['10:20 AM', '10:41 AM']],
+                        //            dropdown: true,
+                        scrollbar: true,
+
+                        change: function (time) {
+                            var slot = $(this).val();
+
+                            // Check whether the time is already book or not
+                            var bookData = {
+                                "AppointDate": $('#selectDate').val(),
+                                "Doc_Id": $('#selectDoc option:selected').val()
+                            };
+
+                            $.get('/Patient/BookedSlots', bookData, function (result) {
+                                if (result != null) {
+                                    var valid = true;
+                                    $.each(result, function (i, v1) {
+                                        if (v1.AppointTime == slot) {
+                                            //       alert('The selected slot has already booked, Please select another slot.');
+                                            swal("Warning", "The selected slot has already booked, Please select another slot", "warning");
+                                            $('#btnBook').attr('disabled', true);
+                                            valid = false;
+                                        }
+
+                                    });
+
+                                    if (valid == true) {
+                                        $('#btnBook').removeAttr('disabled');
+                                    }
+                                }
+                            });
+
+                        }
+                    });
+
+
+                }
+            });
+
+
+        });
+
+        $('#btnBook').click(function () {
+            var valid = true;
+            if ($('#selectDate').val() == "") {
+                valid = false;
+            }
+            if ($('#Doc_Spec_Id option:selected').val() == null) {
+                valid = false;
+            }
+            if ($('#selectDoc option:selected').val == null) {
+                valid = false;
+            }
+            if ($('#selectSlot').val() == "") {
+                valid = false;
+            }
+            if ($('#patientDesc').val() == "") {
+                valid = false;
+            }
+
+            if (valid == false) {
+                $('#err').text('* Please fill all the fields !');
+            }
+            else {
+                $('#err').text('');
+
+                var data = {
+                    "AppointDate": $('#selectDate').val(),
+                    "SpecId": $('#Doc_Spec_Id option:selected').val(),
+                    "DocId": $('#selectDoc option:selected').val(),
+                    "AppointSlot": $('#selectSlot').val(),
+                    "PatientDesc": $('#patientDesc').val()
+                };
+
+
+                $('#bk-appoint').hide('slow');
+                $('#contd-option').show('slow');
+
+                $('#btnBook').hide('slow');
+                //    $('#btnProceed').show('slow');
+
+                $('#backHome').hide('slow');
+                $('#backAppoint').show('slow');
+            }
+
+
+        });
+
+        $('#backAppoint').click(function () {
+            $('#contd-option').hide('slow');
+            $('#bk-appoint').show('slow');
+
+            $('#btnProceedGuest').hide('slow');
+            $('#btnProceedUser').hide('slow');
+            $('#btnBook').show('slow');
+
+            $('#backAppoint').hide('slow');
+            $('#backHome').show('slow');
+        });
+
+        $('input[name="user"]').on('change', function () {
+            if ($('input[name="user"]:checked').val() == "guest") {
+                $('#contd-option').hide('slow');
+                $('#form-signin').hide('slow');
+                $('#form-guest').show('slow');
+                $('#backAppoint').hide('slow');
+                $('#backMenu').show('slow');
+                $('#btnProceedUser').hide('slow');
+                $('#btnProceedGuest').show('slow');
+            }
+
+            if ($('input[name="user"]:checked').val() == "sign") {
+                $('#contd-option').hide('slow');
+                $('#form-guest').hide('slow');
+                $('#form-signin').show('slow');
+                $('#backAppoint').hide('slow');
+                $('#backMenu').show('slow');
+                $('#form-guest').hide('slow');
+                $('#btnProceedUser').show('slow');
+            }
+        });
+
+        $('#backMenu').click(function () {
+            $('#form-guest').hide('slow');
+            $('#form-signin').hide('slow');
+            $('#contd-option').show('slow');
+
+            $('#backMenu').hide('slow');
+            $('#backAppoint').show('slow');
+
+            $('#btnProceedGuest').hide('slow');
+            $('#btnProceedUser').hide('slow');
+
+            $('#form-otp').hide('slow');
+
+
+        });
+
+        var userType = 0;
+
+        $('#btnProceedGuest').click(function () {
+            var valid = true;
+            if ($('#Gname').val() == "") {
+                valid = false;
+            }
+            if ($('#Gemail').val() == "") {
+                valid = false;
+            }
+            if ($('#Gcontact').val() == "") {
+                valid = false;
+            }
+            if ($('input[name="Ggender"]:checked').val() == null) {
+                valid = false;
+            }
+            if (($('#Gemail').val() != '' && !isEmail($('#Gemail').val())) || ($('#Gcontact').val() != '' && !checkNumber($('#Gcontact').val()))) {
+                valid = false;
+                $('#err_guest').text('* Email or Contact number is Invalid !');
+            }
+            else {
+                $('#err_guest').text('* Please fill all the details !');
+            }
+
+            if (valid == true) {
+                $('#err_guest').html('<i class="fa fa-spinner fa-spin" style="font-size:20px"></i> Sending OTP to the given email and the contact number ...');
+                var verifyData = {
+                    "Email": $('#Gemail').val(),
+                    "Contact": $('#Gcontact').val()
+                };
+
+                userType = 1;
+
+                $.post('/Home/SendOneTimePassword', verifyData, function (result) {
+                    if (result == 'wrong') {
+                        swal('Warning','Email does not exist !','warning');
+                    }
+                    else if (result == 'sent') {
+                        $('#form-guest').hide('slow');
+                        $('#backMenu').hide('slow');
+                        $('#form-otp').show('slow');
+                        $('#btnProceedGuest').hide('slow');
+                        $('#btnVerifyOTP').show('slow');
+                    }
+                    else if (result == "email") {
+                        alert('Email already exists, Please continue to your account !');
+                        location.href = '@Url.Action("Index","Home")';
+                    }
+                    else if (result == "contact") {
+                        alert('Contact Number already exists, Please continue to your account !');
+                        location.href = '@Url.Action("Index","Home")';
+                    }
+                    else {
+                        alert('Something went wrong, Please try again !');
+                    }
+                });
+            }
+        });
+
+
+        $('#btnProceedUser').click(function () {
+            var valid = true;
+            if ($('#Uname').val() == "") {
+                valid = false;
+            }
+            if ($('#Uemail').val() == "") {
+                valid = false;
+            }
+            if ($('#Ucontact').val() == null) {
+                valid = false;
+            }
+            if ($('input[name="Ugender"]:checked').val() == null) {
+                valid = false;
+            }
+            if ($('#UPassword').val() == null) {
+                valid = false;
+            }
+            if ($('#UCPass').val() == null) {
+                valid = false;
+            }
+            if (($('#Uemail').val() != '' && !isEmail($('#Uemail').val())) || ($('#Ucontact').val() != '' && !checkNumber($('#Ucontact').val()))) {
+                valid = false;
+                $('#err_user').text('* Email or Contact number is Invalid !');
+            }
+            
+            else if ($('#UPassword').val() != null && $('#UCPass').val() != null && $('#UPassword').val() != $('#UCPass').val()) {
+                //    valid = false;
+                $('#err_user').text('* password and confirm password should be same !');
+
+            }
+            else {
+                $('#err_user').text('* Please fill all the details !');
+            }
+
+            if (valid == true) {
+                $('#err_user').html('<i class="fa fa-spinner fa-spin" style="font-size:20px"></i> Sending OTP to the given email and the contact number ...');
+                var verifyData = {
+                    "Email": $('#Uemail').val(),
+                    "Contact": $('#Ucontact').val()
+                };
+
+                userType = 2;
+
+                $.post('/Home/SendOneTimePassword', verifyData, function (result) {
+                    if (result == 'sent') {
+                        $('#form-signin').hide('slow');
+                        $('#backMenu').hide('slow');
+                        $('#form-otp').show('slow');
+                        $('#btnProceedUser').hide('slow');
+                        $('#btnVerifyOTP').show('slow');
+                    }
+                    else if (result == "email") {
+                        alert('Email already exists, Please continue to your account !');
+                        location.href = '@Url.Action("Index","Home")';
+                    }
+                    else if (result == "contact") {
+                        alert('Contact Number already exists, Please continue to your account !');
+                        location.href = '@Url.Action("Index","Home")';
+                    }
+                    else {
+                        alert('Something went wrong, Please try again !');
+                    }
+                });
+            }
+        });
+
+       $('#btnVerifyOTP').click(function () {
+            if ($('#OTP_field').val() == "") {
+                $('#err_otp').text('* Please enter One Time Password to proceed !');
+            }
+            else {
+                $('#err_otp').html('<i class="fa fa-spinner fa-spin" style="font-size:20px"></i> Validating the data ...');
+                if (userType == 1) {
+                    var data1 = {
+                        "AppointDate": $('#selectDate').val(),
+                        "SpecId": $('#Doc_Spec_Id option:selected').val(),
+                        "DocId": $('#selectDoc option:selected').val(),
+                        "AppointSlot": $('#selectSlot').val(),
+                        "PatientDesc": $('#patientDesc').val(),
+
+                        "NewName": $('#Gname').val(),
+                        "NewEmail": $('#Gemail').val(),
+                        "NewContact": $('#Gcontact').val(),
+                        "NewGender": $('input[name=Ggender]:checked').val(),
+                        "NewPass": "123456",
+
+                        "UserOTP": $('#OTP_field').val()
+                    };
+
+                    $.post('/Home/SaveNewAppointment', data1, function (result) {
+                        if (result == "NotMatched") {
+                            alert('OTP is not matched, Please try again !');
+                            $('#err_otp').html('');
+                        }
+                        else if (result == "booked") {
+                            alert('Appointment successfully booked ! You can use your contact number as UserName and Password 123456');
+                            //Session["PatientUserName"] = $('#Gcontact').val();
+                            location.href = '@Url.Action("Index","Home")';
+                        }
+                        else if (result == "NotBooked") {
+                            alert('Problem booking the appointment, Please try again !');
+                            $('#err_otp').html('');
+                        }
+                        else {
+                            alert('Something went wrong, Please try again !');
+                            $('#err_otp').html('');
+                        }
+                    });
+                }
+                else if (userType == 2) {
+                    var data2 = {
+                        "AppointDate": $('#selectDate').val(),
+                        "SpecId": $('#Doc_Spec_Id option:selected').val(),
+                        "DocId": $('#selectDoc option:selected').val(),
+                        "AppointSlot": $('#selectSlot').val(),
+                        "PatientDesc": $('#patientDesc').val(),
+
+                        "NewName": $('#Uname').val(),
+                        "NewEmail": $('#Uemail').val(),
+                        "NewContact": $('#Ucontact').val(),
+                        "NewGender": $('input[name=Ugender]:checked').val(),
+                        "NewPass": $('#Upassword').val(),
+
+                        "UserOTP": $('#OTP_field').val()
+                    };
+                    $.post('/Home/SaveNewAppointment', data2, function (result) {
+                        if (result == "NotMatched") {
+                            alert('OTP is not matched, Please try again !');
+                            $('#err_otp').html('');
+                        }
+                        else if (result == "booked") {
+                            alert('Appointment successfully booked ! You can use your contact number as UserName with your password');
+                            Session["PatientUserName"] = $('#Ucontact').val();
+                            location.href = '@Url.Action("AppointHistory","Patient")';
+                        }
+                        else if (result == "NotBooked") {
+                            alert('Problem booking the appointment, Please try again !');
+                            $('#err_otp').html('');
+                        }
+                        else {
+                            alert('Something went wrong, Please try again !');
+                            $('#err_otp').html('');
+                        }
+                    });
+                }
+            }
+        });
+
+
+    </script>
+
+</body>
+</html>

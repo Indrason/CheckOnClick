@@ -1,0 +1,444 @@
+﻿@model CheckOnClick.Models.DoctorProfile
+@{
+    ViewBag.Title = "Profile";
+    Layout = "~/Views/Shared/_LayoutDoctor.cshtml";
+}
+
+<div class="form-grids row widget-shadow" data-example-id="basic-forms">
+    <div class="form-title">
+        <h4>My Profile</h4>
+
+    </div>
+    <div class="form-body">
+
+
+        @using (Html.BeginForm("profile", "Doctor", FormMethod.Post))
+        {
+            <!--Name input-->
+
+
+
+            <div class="row form-group">
+                <div class="col-md-2">
+                    @Html.LabelFor(a => a.Name)
+                </div>
+                <div class="col-md-8">
+                    <!--              <input type="text" id="admin_fullName" name="admin_fullName" class="form-control" placeholder="Full Name" disabled />   -->
+                    @Html.TextBoxFor(a => a.Name, new { @class = "form-control", @placeholder = "Full Name", @disabled = "disabled" })
+                </div>
+            </div>
+
+
+            <!-- specification input-->
+            <div class=" row form-group">
+                <div class="col-md-2">
+                    <label>Specialization</label>
+                </div>
+
+                <div class="col-md-8">
+                    @*<input id="specification" name="specification" type="text" class="form-control input-md" disabled>*@
+                    @Html.TextBoxFor(a => a.Specification, new { @class = "form-control", @disabled = "disabled" })
+                    @Html.ValidationMessageFor(a => a.Specification)
+                    <span class="help-block"></span>
+                </div>
+            </div>
+
+
+            <div class=" row form-group">
+                <div class="col-md-2">
+                    @Html.LabelFor(a => a.Gender)
+                </div>
+
+                <div class="col-md-8">
+                    @*<input id="specification" name="specification" type="text" class="form-control input-md" disabled>*@
+                    @Html.TextBoxFor(a => a.Gender, new { @class = "form-control", @disabled = "disabled" })
+                    @Html.ValidationMessageFor(a => a.Gender)
+                    <span class="help-block"></span>
+                </div>
+            </div>
+
+
+            <div class=" row form-group">
+                <div class="col-md-2">
+                    <label> Blood group</label>
+                </div>
+                <div class="col-md-8">
+                    @*<input id="specification" name="specification" type="text" class="form-control input-md" disabled>*@
+                    @Html.TextBoxFor(a => a.BloodGroup, new { @class = "form-control", @disabled = "disabled" })
+                    @Html.ValidationMessageFor(a => a.BloodGroup)
+                    <span class="help-block"></span>
+                </div>
+            </div>
+
+
+            <div class=" row form-group">
+                <div class="col-md-2">
+                    @Html.LabelFor(a => a.Email)
+                </div>
+                <div class="col-md-8">
+                    @*<input id="specification" name="specification" type="text" class="form-control input-md" disabled>*@
+                    @Html.TextBoxFor(a => a.Email, new { @class = "form-control", @disabled = "disabled" })
+                    @Html.ValidationMessageFor(a => a.Email)
+                    <span class="help-block"></span>
+                </div>
+            </div>
+
+
+            <div class=" row form-group">
+                <div class="col-md-2">
+                    <label>Date of birth</label>
+                </div>
+                <div class="col-md-8">
+                    @*<input id="specification" name="specification" type="text" class="form-control input-md" disabled>*@
+                    @Html.TextBoxFor(a => a.DOBdoctor, new { @class = "form-control", @disabled = "disabled" })
+                    @Html.ValidationMessageFor(a => a.DOBdoctor)
+                    <span class="help-block"></span>
+                </div>
+            </div>
+
+
+            <div class=" row form-group">
+                <div class="col-md-2">
+                    @Html.LabelFor(a => a.Contact)
+                </div>
+                <div class="col-md-8">
+                    @*<input id="specification" name="specification" type="text" class="form-control input-md" disabled>*@
+                    @Html.TextBoxFor(a => a.Contact, new { @class = "form-control", @disabled = "disabled" })
+                    @Html.ValidationMessageFor(a => a.Contact)
+                    <span class="help-block"></span>
+                </div>
+            </div>
+
+
+
+
+
+            <div class="row form-group">
+                <div class="col-md-2">
+                    <label for="admin_addCity">Address:  Country</label>
+                </div>
+                <div class="col-md-3">
+                    <!--            <input type="text" id="admin_addCity" name="admin_addCity" class="form-control" placeholder="City" disabled />  -->
+                    @Html.TextBoxFor(a => a.Country, new { @class = "form-control", @placeholder = "City", @disabled = "disabled" })
+                </div>
+                <div class="col-md-2">
+                    <label for="admin_addState">State</label>
+                </div>
+                <div class="col-md-3">
+                    <!--           <input type="text" id="admin_addState" name="admin_addState" class="form-control" placeholder="State" disabled />   -->
+                    @Html.TextBoxFor(a => a.State, new { @class = "form-control", @placeholder = "State", @disabled = "disabled" })
+                </div>
+            </div>
+
+
+
+            <div class="row form-group">
+                <div class="col-md-2">
+                    <label for="admin_addCity">City</label>
+                </div>
+                <div class="col-md-3">
+                    <!--            <input type="text" id="admin_addCity" name="admin_addCity" class="form-control" placeholder="City" disabled />  -->
+                    @Html.TextBoxFor(a => a.City, new { @class = "form-control", @placeholder = "City", @disabled = "disabled" })
+                </div>
+                <div class="col-md-2">
+                    <label for="admin_addState">Pincode</label>
+                </div>
+                <div class="col-md-3">
+                    <!--           <input type="text" id="admin_addState" name="admin_addState" class="form-control" placeholder="State" disabled />   -->
+                    @Html.TextBoxFor(a => a.Pincode, new { @class = "form-control", @placeholder = "State", @disabled = "disabled" })
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+            <div class=" row form-group " hidden>
+                <!--<label class="col-md-4 control-label" for="upload">Upload Documents:</label>-->
+                <div class="col-md-4">
+                    <label>Upload</label>
+                    <div class="input-group input-file" name="upload">
+                        <input type="file" class="form-control-file" accept=".pdf,.jpg,.doc" placeholder='Choose file...' />
+                    </div>
+                    <span class="help-block" style="color:red">Upload documents with (.pdf,.jpg,.doc )</span>
+                </div><br>
+            </div>
+
+
+
+
+
+
+            <div class="row form-group">
+                <div class=" col-md-4" id="edit_div">
+                    <button type="button" class="btn btn-primary form-control" id="btnedit">Edit profile</button>
+                </div>
+                <div class="col-md-4" id="save_div">
+                    <button type="button" class="btn btn-block btn-success" name="update" id="upbtn"><i class="fa fa-check"></i> Save Changes</button>
+                </div>
+                <div class="col-md-4">
+                    <button type="button" class="btn btn-block btn-primary" name="dpwdupdate" id="dpwdupdate" data-toggle="modal" data-target="#edit_Password"><i class="fa fa-edit"></i> Change Password</button>
+                </div>
+            </div>
+
+
+
+
+
+
+        }
+        <div class="modal fade" id="edit_Password" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h5 class="modal-title" id="exampleModalLabel">Change Password</h5>
+
+                    </div>
+                    <div class="modal-body">
+
+                        <form method="post" action="#">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="cur_password">Current Password</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <!--                             <input type="password" name="cur_password" id="cur_password" class="form-control" placeholder="Current Password" /> -->
+                                    @Html.PasswordFor(a => a.Doc_CurrentPassword, new { @class = "form-control", @placeholder = "Current Password" })
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="new_password">New Password</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <!--                            <input type="password" name="new_password" id="new_password" class="form-control" placeholder="New Password" /> -->
+                                    @Html.PasswordFor(a => a.Doc_NewPassword, new { @class = "form-control", @placeholder = "New Password" })
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="retype_password">Re-Type Password</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <!--                           <input type="password" name="retype_password" id="retype_password" class="form-control" placeholder="Re-Type Password" />   -->
+                                    @Html.PasswordFor(a => a.Doc_RePassword, new { @class = "form-control", @placeholder = "Re-Type Password" })
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <button type="button" name="update_password" id="update_password" class="btn btn-success form-control"><i class="fa fa-check"></i> Change Password</button>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                    <!--                  <div class="modal-footer">
+                                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                      <button type="button" class="btn btn-primary">Save changes</button>
+                                  </div>  -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Displaying profile data from database-->
+<script>
+
+    $.ajax({
+        type: "GET",
+        url: "/Doctor/GetProfile",
+        contentType: "application/json",
+        dataType: "json",
+        //    data: {},
+        success: function (result) {
+            if (result != null) {
+
+                $.each(result, function (i, v1) {
+
+                    $('#Name').val(v1.Name);
+                    $('#Specification').val(v1.Specification);
+                    $('#Gender').val(v1.Gender);
+                    $('#BloodGroup').val(v1.BloodGroup);
+                    $('#Email').val(v1.Email);
+                    $('#Contact').val(v1.Contact);
+                    //       alert(parseInt(v1.Admin_DOB.substr(6)));
+         /*           var value = new Date(parseInt(v1.Dateofbirth.substr(6)));//new Date(parseInt(v1.Admin_DOB.replace("/Date(", "").replace(")/", ""), 10));
+                    var month;
+                    if (parseInt(value.getMonth() + 1) < 10) {
+                        month = "0" + parseInt(value.getMonth() + 1);
+                    }
+                    else {
+                        month = parseInt(value.getMonth() + 1);
+                    }
+                    $('#Dateofbirth').val(value.getDate() + "/" + month + "/" + value.getFullYear());
+                    //        alert(value);*/
+                    $('#DOBdoctor').val(v1.DOBdoctor);
+                    $('#City').val(v1.City);
+                    $('#State').val(v1.State);
+                    $('#Country').val(v1.Country);
+                    $('#Pincode').val(v1.Pincode);
+
+
+                });
+
+            }
+            else {
+                alert('Something went wrong');
+            }
+        },
+        failure: function () {
+            alert('Failure');
+        },
+        error: function () {
+            alert('error');
+        }
+    });
+</script>
+
+<!--update data-->
+<script>
+
+    $("#save_div").hide();
+
+    $("#btnedit").click(function (event) {
+        $("#Contact").removeAttr('disabled');
+        $("#Country").removeAttr('disabled');
+        $("#City").removeAttr('disabled');
+        $("#State").removeAttr('disabled');
+        $("#Pincode").removeAttr('disabled');
+        //$("#BloodGroup").removeAttr('disabled');
+        $('#edit_div').hide();
+
+
+
+        $("#save_div").show();
+
+        $("#btnedit").hide();
+
+    });
+
+
+
+    $('#upbtn').click(function () {
+
+        var valid = true;
+        if ($('#Contact').val() == '') {
+            valid = false;
+        }
+        if ($('#City').val() == '') {
+            valid = false;
+        }
+        if ($('#State').val() == '') {
+            valid = false;
+        }
+        if ($('#Country').val() == '') {
+            valid = false;
+        }
+        if ($('#Pincode').val() == '') {
+            valid = false;
+        }
+        if (valid == false) {
+            alert('Please fill all the fields');
+        }
+        else {
+            var data = {
+                "Contact": $('#Contact').val(),
+                "City": $('#City').val(),
+                "State": $('#State').val(),
+                "Country": $('#Country').val(),
+                "Pincode": $('#Pincode').val()
+            };
+            $.ajax({
+                type: "POST",
+                url: "/Doctor/UpdateProfile",
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function (result) {
+                    alert('Successfully Updated !');
+                    location.reload(true);
+                },
+                failure: function (result) {
+                    alert('Something went wrong: failure');
+                },
+                error: function (result) {
+                    alert('Something went wrong: error');
+                }
+            });
+        }
+    });
+
+</script>
+
+
+
+<!--Update passwrd-->
+<script>
+    $('#update_password').click(function () {
+        var valid = true;
+        if ($('#Doc_CurrentPassword').val() == "") {
+            valid = false;
+        }
+        if ($('#Doc_NewPassword').val() == "") {
+            valid = false;
+        }
+        if ($('#Doc_RePassword').val() == "") {
+            valid = false;
+        }
+        if ($('#Doc_NewPassword').val() != null && $('#Doc_RePassword').val() != null && $('#Doc_NewPassword').val() != $('#Doc_RePassword').val()) {
+            alert('Passwords are mismatched');
+            valid = false;
+        }
+
+        if (valid == false) {
+            alert('Please fill all the fields');
+        }
+        else {
+            var data = {
+                "Doc_CurrentPassword": $('#Doc_CurrentPassword').val(),
+                "Doc_NewPassword": $('#Doc_NewPassword').val()
+            };
+
+            $.ajax({
+                type: "POST",
+                url: "/Doctor/UpdateDocPassword",
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function (result) {
+                    if (result == 'notMatch') {
+                        alert('Current Password is incorrect');
+                    }
+                    else if (result == 'saved') {
+                        alert('Password successfully changed');
+                    }
+                    else {
+                        alert('Something went wrong');
+                    }
+                    location.reload(true);
+
+
+                },
+                error: function (result) {
+                    alert('Problem changing the password, please try again !');
+                }
+            });
+        }
+    });
+</script>
+
+
+
+
+

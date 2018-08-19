@@ -3,7 +3,6 @@
     ViewBag.Title = "Appointment History";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
-
 <div class="form-grids row widget-shadow" data-example-id="basic-forms">
     <div class="form-title">
         <h4>Appointment History</h4>
@@ -15,39 +14,47 @@
                     <tr>
                         <td>Appointment ID</td>
                         <td>Doctor ID</td>
-                        <td>Doctor Name</td>
                         <td>Patient UserName</td>
-                        <td>Patient Name</td>
-                        <td>Booked Date</td>
-                        <td>Patient Description</td>
                         <td>Schedule Date</td>
+                        <td>Schedule Time</td>
+                        <td>Booked Date</td>
+                        <td>Appointment Desc</td>
                         <td>Prescription</td>
                         <td>Medicine</td>
+                        <td>Cancel Reason (if cancel)</td>
+                        <td>Status</td>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>180001</td>
-                        <td>18001</td>
-                        <td>Dr. Patro</td>
-                        <td>Gana123</td>
-                        <td>Mr. Gana</td>
-                        <td>24/02/2018 16:00:00</td>
-                        <td>Strong Fever</td>
-                        <td>23/03/2018 12:20:00</td>
-                        <td>Take medicine for 3 days and come for check up</td>
-                        <td>Paracetamol</td>
-
-                    </tr>
-                </tbody>
+                <tbody></tbody>
             </table>
         </div>
     </div>
-
 </div>
-
 <script>
     $(document).ready(function () {
-        $("#table_appoint_history").DataTable();
+
+        $.get('/Admin/FetchAppointHistory', function (data) {
+            data = JSON.parse(data);
+            var rows = "";
+
+
+
+            for (var i = 0; i < data.Table.length; i++) {
+                rows += '<tr><td>' + data.Table[i].APPOINT_ID + '</td><td>' + data.Table[i].DOCTOR_ID + '</td><td>' + data.Table[i].PATIENT_USERNAME + '</td><td>' + data.Table[i].SCHEDULE_DATE + '</td><td>' + data.Table[i].SCHEDULE_TIME + '</td><td>' + data.Table[i].BOOKED_DATE + '</td><td>' + data.Table[i].APPOINT_DESC + '</td><td>' + data.Table[i].PRESCRIPTION + '</td><td>' + data.Table[i].MEDICINE + '</td><td>' + data.Table[i].CANCEL_REASON + '</td><td>' + data.Table[i].APPOINT_STATUS + '</td></tr>';
+            }
+
+
+            /*    $.each(data.Table, function (i, v1) {
+                    rows += '<tr><td>' + v1.APPOINT_ID + '</td><td>' + v1.DOCTOR_ID + '</td><td>' + v1.PATIENT_USERNAME + '</td><td>' + v1.SCHEDULE_DATE + '</td><td>' + v1.SCHEDULE_TIME + '</td><td>' + v1.BOOKED_DATE + '</td><td>' + v1.APPOINT_DESC + '</td><td>' + V1.PRESCRIPTION + '</td><td>' + v1.MEDICINE + '</td></tr>';
+                    alert(rows);
+                });*/
+
+            $('#table_appoint_history tbody').html(rows);
+
+            $('#table_appoint_history').DataTable();
+
+        });
+
     });
 </script>
+

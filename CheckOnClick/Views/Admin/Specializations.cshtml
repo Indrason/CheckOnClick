@@ -41,10 +41,10 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Add Specialization</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
+                        <h5 class="modal-title" id="exampleModalLabel">Add Specialization</h5>
                     </div>
                     <div class="modal-body">
                         <form>
@@ -52,8 +52,9 @@
                                 <div class="col-md-5">
                                     <label class="control-label">Enter Specialization Name</label>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-7">
                                     @Html.TextBoxFor(a => a.NewSPEC_Name, new { @class = "form-control", @placeholder = "Enter Specialization" })
+                                    <span id="err_spec" style="font-size:12px; color: red;"></span>
                                 </div>
                             </div>
 
@@ -75,27 +76,6 @@
 </div>
 
 <script>
-    /*
-            $.ajax({
-                type: "GET",
-                url: "/Admin/ShowRole",
-                dataType: "json",
-                contentType: "application/json",
-                success: function (result) {
-                    if (result != null) {
-                        $.each(result, function (i, v1) {
-                            $('#roleBody').append('<tr><td>' + v1.Role_ID + '</td><td>' + v1.Role_Name + '</td><td>' + v1.Role_Status + '</td></tr>');
-                        });
-                    }
-                },
-                error: function (result) {
-                    alert('Error occured !');
-                },
-                failure: function (result) {
-                    alert('Failure occured');
-                }
-            });
-            */
 
     $(document).ready(function () {
         $("#table_specialization").DataTable({
@@ -116,37 +96,39 @@
 
     $('#saveSpec').click(function () {
         var valid = true;
-        if ($('#NewSPEC_NAME').val() == '') {
+        if ($('#NewSPEC_Name').val() == '') {
+            $('#err_spec').text('* Please enter a specialization !');
             valid = false;
         }
         else {
+            $('#err_spec').text('');
             var data = {
                 "NewSPEC_Name": $('#NewSPEC_Name').val()
             };
+            $.ajax({
+                type: "POST",
+                url: "/Admin/AddSpec",
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function (result) {
+                    if (result == "exists") {
+                        swal('Warning', 'Specialization already exists !', 'warning');
+                    }
+                    else if (result == "success") {
+                        swal('Success', 'Specialization successfully added !', 'success')
+                            .then((value) => {
+                                location.reload(true);
+                            });
+                    }
+                },
+                error: function (result) {
+                    swal('Error', 'Something went wrong, Please try again !', 'error');
+                }
+
+            });
         }
-        $.ajax({
-            type: "POST",
-            url: "/Admin/AddSpec",
-            dataType: "json",
-            contentType: "application/json",
-            data: JSON.stringify(data),
-            success: function (result) {
-                if (result == "exists") {
-                    alert('Already there');
-                }
-                else if (result == "success") {
-                    alert('Role Added');
-                }
 
-                location.reload(true);
-
-            },
-            error: function (result) {
-                alert('error');
-            }
-
-
-        })
 
     });
 </script>

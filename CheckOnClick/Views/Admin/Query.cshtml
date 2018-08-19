@@ -1,9 +1,7 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Query";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
-
 <div class="form-grids row widget-shadow" data-example-id="basic-forms">
     <div class="form-title">
         <h4>Query</h4>
@@ -14,41 +12,146 @@
                 <thead class="bg-info">
                     <tr>
                         <td>Query ID</td>
+                        <td>user Id</td>
                         <td>Name</td>
                         <td>Email</td>
-                        <td>Contact Number</td>
-                        <td>Query</td>
+                        <td>Contact</td>
+                        <td>Sent To</td>
+                        <td>Message</td>
+                        <td>Message Date</td>
+
                         <td>Reply</td>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Raj</td>
-                        <td>raj@yahoo.com</td>
-                        <td>9874563210</td>
-                        <td>Any Query</td>
-                        <td>Any Reply</td>
-
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Tom</td>
-                        <td>tom@yahoo.com</td>
-                        <td>7789543210</td>
-                        <td>Questions</td>
-                        <td><button class="btn btn-primary" id="reply">Reply</button></td>
-
-                    </tr>
-                </tbody>
+                <tbody></tbody>
             </table>
         </div>
+        <!-- Model -->
+
+        <div class="modal fade" id="replyModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Reply Here</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label>Query ID:</label>
+                            </div>
+
+                            <div class="col-md-2">
+                                <span id="queryID"></span>
+                            </div>
+
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-2">
+                                <label for="reply" class="label label-default">Message</label>
+                            </div>
+                            <div class="col-md-10">
+                                <textarea id="reply" class="form-control" rows="3" placeholder="Enter your reply here ..."></textarea>
+                                <span id="err_query" style="font-size:12px; color:red;"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <button class="btn btn-success form-control" type="button" id="btnReplyQuery">Reply</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Model ends-->
+
+
+
+
     </div>
-
 </div>
-
 <script>
     $(document).ready(function () {
-        $("#table_query").DataTable();
+
+        $.get('/Admin/FetchAdminQuery', function (data) {
+
+            data = JSON.parse(data);
+            var rows = "";
+
+            for (var i = 0; i < data.Table.length; i++) {
+                var btn = "";
+                if (data.Table[i].REPLY == null && data.Table[i].TARGET == "admin") {
+                    btn = '<button type="button" class="btn btn-primary btn-sm" onclick="replyQuery(' + data.Table[i].QUERY_ID + ')">Reply Now</button>';
+                }
+                else if (data.Table[i].REPLY != null && data.Table[i].TARGET != "admin") {
+                    btn = data.Table[i].REPLY;
+                }
+                else if (data.Table[i].REPLY != null && data.Table[i].TARGET == "admin") {
+                    btn = data.Table[i].REPLY;
+                }
+                else {
+                    btn = 'Not Replied yet';
+                }
+                rows += '<tr><td>' + data.Table[i].QUERY_ID + '</td><td>' + data.Table[i].USER_ID + '</td><td>' + data.Table[i].NAME + '</td><td>' + data.Table[i].EMAIL + '</td><td>' + data.Table[i].CONTACT + '</td><td>' + data.Table[i].TARGET + '</td><td>' + data.Table[i].MESSAGE + '</td><td>' + data.Table[i].MESG_DATE + '</td><td>' + btn + '</td></tr>';
+            }
+
+
+
+            $('#table_query tbody').html(rows);
+
+            $('#table_query').DataTable();
+
+        });
+
+    });
+
+
+    var Qid;
+
+    function replyQuery(i) {
+        $('#queryID').text(i);
+        $('#replyModal').modal();
+        Qid = i;
+    }
+
+    $('#btnReplyQuery').click(function () {
+        var valid = true
+        //    var Qid = $('#queryID').val();
+        var Qreply = $('#reply').val();
+
+        if ($('#reply').val() == '') {
+            valid = false;
+        }
+
+        if (valid == false) {
+            //swal("warning", "PLease fill field", "warning");
+            $('#err_query').text('* Please enter a reply !');
+        }
+        else {
+            $('#err_query').html('<i class="fa fa-spinner fa-spin" style="font-size:20px"></i> Replying ...');
+            var SendData = {
+                "Qid": Qid,
+                "Qreply": $('#reply').val()
+            };
+            $.post('/Admin/Reply', SendData, function (result) {
+                if (result == 'saved') {
+                    swal("Success", "Query Replied !", "success")
+                        .then((value) => {
+                            location.reload(true);
+                        });
+
+                }
+                else if (result == 'notSaved') {
+                    swal("Error", "Problem saving the Reply, Please try again", "error");
+                }
+                else {
+                    swal("Error", "Something went wrong, Please try again", "error");
+                }
+            });
+
+        }
     });
 </script>

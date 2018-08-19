@@ -1,0 +1,243 @@
+﻿
+@{
+    ViewBag.Title = "Book Appointment";
+    Layout = "~/Views/Shared/_LayoutPatient.cshtml";
+}
+
+
+<div class="form-grids row widget-shadow" data-example-id="basic-forms">
+    <div class="form-title">
+        <h4>Book Appointment</h4>
+    </div>
+    <div class="form-body">
+        <div class="row form-group">
+            <div class="col-md-3"><label for="selectDate">Select Date</label></div>
+            <div class="col-md-6"><input type="date" id="selectDate" class="form-control" /></div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-md-3"><label for="selectSpec">Select Specialization</label></div>
+            <div class="col-md-6">
+                <!--     <select id="selectDoc" class="form-control">
+                     <option value="">-- Select Doctor --</option>
+                     <option value="1111">Dr. Patro</option>
+                 </select>   -->
+                @Html.DropDownList("Specs", null, "-- Select the Specialization --", new { @class = "form-control", @id = "Doc_Spec_Id", @disabled = "disabled" })
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-md-3"><label for="selectDoc">Select Doctor</label></div>
+            <div class="col-md-6">
+                <select id="selectDoc" class="form-control" disabled>
+                    <option>-- Select Doctor --</option>
+                </select>
+                <span id="bookSlot" style="color:red; font-size:14px"></span>
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-md-3"><label for="selectSlot">Select Slot</label></div>
+            <div class="col-md-6">
+                <input type="text" id="selectSlot" placeholder="-- Click to select Slot -- " class="form-control" readonly />
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-md-3"><label for="patientDesc">Description</label></div>
+            <div class="col-md-6"><textarea maxlength="130" class="form-control" id="patientDesc" rows="3" placeholder="Describe your problem (max - 130 characters)"></textarea></div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <span id="err" style="color:red; font-size:12px"></span>
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-md-4">
+                <button class="btn btn-primary form-control" type="button" id="btnBook">BOOK NOW</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script type="text/javascript">
+
+    var tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    var dd = tomorrow.getDate();
+    var mm = tomorrow.getMonth() + 1;
+    var yyyy = tomorrow.getFullYear();
+
+    if (mm < 10) {
+        mm = '0' + mm;
+    }
+    if (dd < 10) {
+        dd = '0' + dd;
+    }
+
+    var minDate = yyyy + "-" + mm + "-" + dd;
+
+    $('#selectDate').attr('min', minDate);
+
+    $('#selectDate').on('change', function () {
+        if ($('#selectDate').val() != "") {
+            $('#Doc_Spec_Id').removeAttr('disabled');
+        }
+    });
+
+    $('#Doc_Spec_Id').on('change', function () {
+        if ($('#Doc_Spec_Id option:selected').val() != null) {
+            $('#selectDoc').removeAttr('disabled');
+        }
+
+        var spec_id = $('#Doc_Spec_Id option:selected').val();
+
+        $.get("/Patient/LoadDoctor", { Spec_Id: spec_id }, function (data) {
+            var opt = '<option>-- Select Doctor --</option>';
+            $.each(data, function (i, v1) {
+                opt += '<option value="' + v1.Value + '">' + v1.Text + '</option>';
+            });
+
+            $('#selectDoc').html(opt);
+        });
+    });
+
+    $('#selectDoc').on('change', function () {
+        var doc_id = $('#selectDoc option:selected').val();
+        var slot_id;
+        var time_from;
+        var time_to;
+        var disableTimeRanges;
+
+        var apointDate = $('#selectDate').val();
+        var bookData = {
+            "AppointDate": apointDate,
+            "Doc_Id": doc_id
+        };
+
+        $.get('/Patient/BookedSlots', bookData, function (result) {
+            if (result != null) {
+                var bookedResponse = "";
+                $.each(result, function (i, v1) {
+                    bookedResponse += v1.AppointTime + " ";
+                });
+
+                if (bookedResponse == "") {
+                    $('#bookSlot').text('All slots are free.');
+                }
+                else {
+                    $('#bookSlot').text('Some slots are already booked - ' + bookedResponse);
+                }
+            }
+        });
+
+
+
+        $.get('/Patient/LoadSlots', { Doc_id: doc_id }, function (data) {
+            var opt = '<option>-- Select Slot --</option>';
+            $.each(data, function (i, v1) {
+                slot_id = v1.Slot_Id;
+                time_from = v1.Slot_From;
+                time_to = v1.Slot_To;
+                //        disableTimeRanges = "[['9:00am', '9:21am'], ['10:20am', '10:41am']]";
+            });
+
+            if (time_from != null && time_to != null) {
+                $('#selectSlot').timepicker({
+                    timeFormat: 'hh:mm p',
+                    minTime: time_from,
+                    maxTime: time_to,
+                    interval: 20,
+                    //            disableTimeRanges: [['09:00 AM', '09:21 AM'], ['10:20 AM', '10:41 AM']],
+                    //            dropdown: true,
+                    scrollbar: true,
+
+                    change: function (time) {
+                        var slot = $(this).val();
+
+                        // Check whether the time is already book or not
+                        var bookData = {
+                            "AppointDate": $('#selectDate').val(),
+                            "Doc_Id": $('#selectDoc option:selected').val()
+                        };
+
+                        $.get('/Patient/BookedSlots', bookData, function (result) {
+                            if (result != null) {
+                                var valid = true;
+                                $.each(result, function (i, v1) {
+                                    if (v1.AppointTime == slot) {
+                                 //       alert('The selected slot has already booked, Please select another slot.');
+                                        swal("Warning", "The selected slot has already booked, Please select another slot", "warning");
+                                        $('#btnBook').attr('disabled', true);
+                                        valid = false;
+                                    }
+
+                                });
+
+                                if (valid == true) {
+                                    $('#btnBook').removeAttr('disabled');
+                                }
+                            }
+                        });
+
+                    }
+                });
+
+
+            }
+        });
+
+
+    });
+
+    $('#btnBook').click(function () {
+        var valid = true;
+        if ($('#selectDate').val() == "") {
+            valid = false;
+        }
+        if ($('#Doc_Spec_Id option:selected').val() == null) {
+            valid = false;
+        }
+        if ($('#selectDoc option:selected').val == null) {
+            valid = false;
+        }
+        if ($('#selectSlot').val() == "") {
+            valid = false;
+        }
+        if ($('#patientDesc').val() == "") {
+            valid = false;
+        }
+
+        if (valid == false) {
+            $('#err').text('* Please fill all the fields !');
+        }
+        else {
+            $('#err').text('');
+
+            var data = {
+                "AppointDate": $('#selectDate').val(),
+                "SpecId": $('#Doc_Spec_Id option:selected').val(),
+                "DocId": $('#selectDoc option:selected').val(),
+                "AppointSlot": $('#selectSlot').val(),
+                "PatientDesc": $('#patientDesc').val()
+            };
+
+            $.post('/Patient/SaveAppointment', data, function (result) {
+                if (result == 'saved') {
+                    alert('Appoinment successfully applied !');
+                }
+                else if (result == 'error') {
+                    alert('Something went wrong, Please try again !');
+                }
+                else {
+                    alert('Problem booking the appointment, Please try again !');
+                }
+                location.reload(true);
+            });
+        }
+
+    });
+</script>

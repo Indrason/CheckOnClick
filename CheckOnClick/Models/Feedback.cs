@@ -24,6 +24,8 @@ namespace CheckOnClick.Models
 
         public decimal RATING { get; set; }
 
+        public string PATIENT_USERNAME { get; set; }
+
 
         public DataSet getFeedback()
         {

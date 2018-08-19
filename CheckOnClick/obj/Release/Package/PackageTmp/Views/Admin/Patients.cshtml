@@ -1,0 +1,329 @@
+﻿@model CheckOnClick.Models.Patient
+@{
+    ViewBag.Title = "Patients";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="form-grids row widget-shadow" data-example-id="basic-forms">
+    <div class="form-title">
+        <h4>Doctors</h4>
+    </div>
+    <div class="form-body">
+        <div class="table-responsive">
+            <table class="table" id="table_patients">
+                <thead class="bg-info">
+                    <tr>
+                        <td>Patient ID</td>
+                        <td> Name</td>
+                        <td>Patient Username</td>
+                        <td> Email</td>
+                        <td>Gender</td>
+                        <td> Contact</td>
+                        <td>DOB</td>
+                        <td>BloodGroup</td>
+                        <td>City</td>
+                        <td>State</td>
+                        <td>Country</td>
+                        <td>Pin</td>
+                        <td>Acnt_Date</td>
+                        <td>Is Active</td>
+                    </tr>
+                </thead>
+                <tbody id="patientbody"></tbody>
+            </table>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <button type="button" class="btn btn-block btn-primary" name="admin_add_doctor" data-toggle="modal" data-target="#addpatient"><i class="fa fa-edit"></i> Add patient</button>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="addpatient" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Add Patient</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <!--        <div class="form-grids row widget-shadow" data-example-id="basic-forms">
+                                    <div class="form-title">
+                                        <h4>Add patient</h4>
+                                    </div>
+                                    <div class="form-body fluid">   -->
+                        <form>
+                            <div class="row form-group">
+                                <div class="col-md-3">
+                                    <label for="patient_fullname">Full Name</label>
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.TextBoxFor(a => a.PATIENT_NAME, new { @class = "form-control", @placeholder = "Full Name" })
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <div class="col-md-3">
+                                    <label for="patient_fullname">User Name</label>
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.TextBoxFor(a => a.PATIENT_USERNAME, new { @class = "form-control", @placeholder = "User Name " })
+                                </div>
+                            </div>
+
+
+                            <div class="row form-group">
+                                <div class="col-md-3">
+                                    <label for="patient_email">Email</label>
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.TextBoxFor(a => a.PATIENT_EMAIL, new { @class = "form-control", @placeholder = "Email" })
+
+                                </div><br />
+                                <div class="row from-group">
+                                    <div class="col-sm-3">
+                                        <label for="Gender">Gender</label>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <!--     <input type="radio"> Male   -->
+                                        @Html.RadioButtonFor(a => a.PATIENT_GENDER, "Male") Male
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <!--     <input type="radio"> Female -->
+                                        @Html.RadioButtonFor(a => a.PATIENT_GENDER, "Female") Female
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-md-3">
+                                    <label for="patient_contact">Contact</label>
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.TextBoxFor(a => a.PATIENT_CONTACT, new { @class = "form-control", @placeholder = "Contact" })
+
+                                </div>
+                            </div>
+
+
+
+                            <div class="row form-group">
+                                <div class="col-md-3">
+                                    <label for="patient_dob">DOB</label>
+                                </div>
+                                <div class="col-md-9">
+                                    @Html.TextBoxFor(a => a.PATIENT_DOB_IN, new { @class = "form-control", @placeholder = "Date Of Birth", @type = "date" })
+
+                                </div>
+                            </div>
+
+                            <!-- <div class="row form-group">
+                                <div class="col-md-3">
+                                    <label for="admin_dob">Role Id</label>
+                                </div>
+                                <div class="col-md-9">
+                                    <input type="date" id="admin_dob" name="admin_dob" class="form-control" placeholder="Date of Birth" />
+                                </div>
+                            </div>-->
+                            <div class="row form-group">
+                                <div class="col-md-3">
+                                    <label for="patient_bloodgroup">Blood Group</label>
+                                </div>
+                                <div class="col-md-9">
+                                    <!-- input type="text" id="patient_bloodgroup" name="patient_bloodgroup" class="form-control" placeholder="blood group" />-->
+                                    @Html.TextBoxFor(a => a.PATIENT_BLOODGP, new { @class = "form-control", @placeholder = "Blood Group" })
+                                </div>
+                            </div>
+
+
+
+                            <div class="row form-group">
+                                <div class="col-md-3">
+                                    <label for="patient_addCity">Address: City</label>
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.TextBoxFor(a => a.PATIENT_CITY, new { @class = "form-control", @placeholder = "City" })
+
+                                </div>
+                                <div class="col-md-2">
+                                    <label for="doctor_addState">State</label>
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(a => a.PATIENT_STATE, new { @class = "form-control", @placeholder = "State" })
+
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <div class="col-md-3">
+                                    <label for="patient_addCountry">Country</label>
+                                </div>
+                                <div class="col-md-3">
+                                    @Html.TextBoxFor(a => a.PATIENT_COUNTRY, new { @class = "form-control", @placeholder = "Country" })
+
+                                </div>
+                                <div class="col-md-2">
+                                    <label for="patient_addPin">Pin</label>
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.TextBoxFor(a => a.PATIENT_PIN, new { @class = "form-control", @placeholder = "Pin" })
+
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <button type="button" class="btn btn-primary form-control" id="addNewPatient">Add Patient</button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Model close-->
+
+    </div>
+
+</div>
+
+<script>
+    $(document).ready(function () {
+
+        $("#table_patients").DataTable({
+            "ajax": {
+                type: "GET",
+                url: "/Admin/ShowPatient",
+                dataType: "json",
+                contentType: "application/json"
+            },
+            "columns": [
+                { "data": "PATIENT_ID" },
+                { "data": "PATIENT_NAME" },
+                { "data": "PATIENT_USERNAME" },
+                { "data": "PATIENT_EMAIL" },
+                { "data": "PATIENT_GENDER" },
+                { "data": "PATIENT_CONTACT" },
+                { "data": "PATIENT_DOB" },
+                { "data": "PATIENT_BLOODGP" },
+                { "data": "PATIENT_CITY" },
+                { "data": "PATIENT_STATE" },
+                { "data": "PATIENT_COUNTRY" },
+                { "data": "PATIENT_PIN" },
+                { "data": "PATIENT_ACNT_DATE" },
+                { "data": "ACTIVE" },
+            ]
+
+
+        });
+
+    });
+
+
+    // adding new patient script by admin panel
+
+    /*    $('#addNewPatient').click(function () {
+            alert('Testing');
+
+            var valid = true;
+            if ($('#PATIENT_NAME').val() == "") {
+                valid = false;
+            }
+            if (valid == false) {
+                alert('Please fill all the fields !');
+            }
+        });
+    */
+
+    $('#addNewPatient').click(function () {
+        var valid = true;
+        if ($('#PATIENT_NAME').val() == "") {
+            valid = false;
+        }
+        if ($('#PATIENT_USERNAME').val() == "") {
+            valid = false;
+        }
+        if ($('#PATIENT_EMAIL').val() == "") {
+            valid = false;
+        }
+        if ($('#PATIENT_GENDER:checked').val() == null) {
+            valid = false;
+        }
+        if ($('#PATIENT_CONTACT').val() == "") {
+            valid = false;
+        }
+        if ($('#PATIENT_BloodGP').val() == "") {
+            valid = false;
+        }
+        if ($('#PATIENT_CITY').val() == "") {
+            valid = false;
+        }
+        if ($('#PATIENT_STATE').val() == "") {
+            valid = false;
+        }
+        if ($('#PATIENT_COUNTRY').val() == "") {
+            valid = false;
+        }
+        if ($('#PATIENT_PIN').val() == "") {
+            valid = false;
+        }
+        if ($('#PATIENT_DOB').val() == "") {
+            valid = false;
+        }
+
+        if (valid == false) {
+            alert('Please fill all the fields !');
+        }
+        else {
+            var data = {
+                "PATIENT_NAME": $('#PATIENT_NAME').val(),
+                "PATIENT_USERNAME": $('#PATIENT_USERNAME').val(),
+                "PATIENT_EMAIL": $('#PATIENT_EMAIL').val(),
+                "PATIENT_GENDER": $('#PATIENT_GENDER:checked').val(),
+                "PATIENT_CONTACT": $('#PATIENT_CONTACT').val(),
+                "PATIENT_DOB_IN": $('#PATIENT_DOB_IN').val(),
+                "PATIENT_BLOODGP": $('#PATIENT_BLOODGP').val(),
+                "PATIENT_CITY": $('#PATIENT_CITY').val(),
+                "PATIENT_STATE": $('#PATIENT_STATE').val(),
+                "PATIENT_COUNTRY": $('#PATIENT_COUNTRY').val(),
+                "PATIENT_PIN": $('#PATIENT_PIN').val()
+                // "Staff_Pin": $('#Staff_Pin').val()
+            };
+
+            $.ajax({
+                type: "POST",
+                url: "/Admin/AddPatient/",
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function (result) {
+                    if (result == "email") {
+                        alert('Patient Email is already exist !');
+                    }
+                    else if (result == "username") {
+                        alert('Patient username is already exist !');
+                    }
+                    else if (result == "error") {
+                        alert('Problem adding the doctor');
+                    }
+                    else {
+                        alert('Patient successfully added with UserName: ' + result + ' And Password: 123456');
+                    }
+
+                    location.reload(true);
+                },
+
+                error: function (result) {
+                    alert('Some error occurred! Please try again!');
+                }
+            });
+        }
+    });
+
+
+</script>

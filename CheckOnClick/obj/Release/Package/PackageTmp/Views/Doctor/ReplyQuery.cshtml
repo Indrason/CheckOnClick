@@ -1,0 +1,138 @@
+﻿@model CheckOnClick.Models.DoctorProfile
+@{
+    ViewBag.Title = "Reply Query";
+    Layout = "~/Views/Shared/_LayoutDoctor.cshtml";
+}
+
+<div class="forms">
+    <div class="form-grids row widget-shadow" data-example-id="basic-forms">
+        <div class="form-title">
+            <h4>Reply Query</h4>
+        </div>
+        <div class="form-body" id="table_query">
+            <div class="table table-responsive">
+                <table id="querytable" class="table">
+                    <thead class="bg-info">
+                        <tr>
+                            <th>Query Id</th>
+                            <th>Queried Name</th>
+                            <th>Query Date</th>
+                            <th>Query</th>
+                            <th>Reply Query</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Model -->
+
+        <div class="modal fade" id="replyModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Reply Here</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label>Query ID:</label>
+                            </div>
+                            <div class="col-md-2">
+                                <span id="queryID"></span>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-2">
+                                <label for="reply" class="label label-default">Message</label>
+                            </div>
+                            <div class="col-md-10">
+                                <textarea id="reply" class="form-control" rows="3" placeholder="Enter your reply here ..."></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <button class="btn btn-success form-control" type="button" id="btnReplyQuery">Reply</button>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Model ends-->
+
+
+    </div>
+</div>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $.get('/Doctor/FetchQueryRecord', function (data) {
+            data = JSON.parse(data);
+            var rows = "";
+
+            for (var i = 0; i < data.Table.length; i++) {
+                var btn;
+                if (data.Table[i].REPLY == null) {
+                    btn = '<button class="btn btn-primary" type="button" title="Reply Now" onclick="replyQuery(' + data.Table[i].QUERY_ID + ')">Reply Now</button>';
+                }
+                else {
+                    btn = data.Table[i].REPLY;
+                }
+
+                rows += '<tr><td>' + data.Table[i].QUERY_ID + '</td><td>' + data.Table[i].NAME + '</td><td>' + data.Table[i].MESG_DATE + '</td><td>' + data.Table[i].MESSAGE + '</td><td>' + btn + '</td></tr>';
+            }
+            $('#querytable tbody').html(rows);
+
+            $('#querytable').DataTable();
+
+
+        });
+    });
+
+    var Qid;
+
+    function replyQuery(i) { 
+        $('#queryID').text(i);
+        $('#replyModal').modal();
+        Qid = i;
+    }
+
+    $('#btnReplyQuery').click(function () {
+        var valid =true
+    //    var Qid = $('#queryID').val();
+        var Qreply = $('#reply').val();
+
+        if ($('#reply').val()== '') {
+            valid = false;
+        }
+
+        if (valid == false) {
+            swal("warning", "PLease fill field", "warning");
+        }
+        else {
+            var SendData = {
+                "Qid": Qid,
+                "Qreply": $('#reply').val()
+            };
+            $.post('/Doctor/Reply', SendData, function (result) {
+                if (result == 'saved') {
+                    swal("Success", "Query Replied !", "success");
+                    location.reload(true);
+                }
+                else if (result == 'notSaved') {
+                    swal("Error", "Problem saving the Reply, Please try again", "error");
+                }
+                else {
+                    swal("Error", "Something went wrong, Please try again", "error");
+                }
+            }); 
+
+        }
+    });
+</script>

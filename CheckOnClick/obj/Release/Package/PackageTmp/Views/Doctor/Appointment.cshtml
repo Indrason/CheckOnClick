@@ -1,0 +1,253 @@
+﻿
+@{
+    ViewBag.Title = "My Appointment";
+    Layout = "~/Views/Shared/_LayoutDoctor.cshtml";
+}
+
+<div class="form-grids row widget-shadow" data-example-id="basic-forms">
+    <div class="form-title">
+
+        <h4>My Appointment</h4>
+    </div>
+    <div class="form-body" id="table_apt">
+        <div class="table table-responsive">
+            <table id="myTable">
+                <thead class="bg-info">
+                    <tr>
+                        <th>Appointment Id</th>
+                        <th>Patient Name</th>
+                        <th>Schedule Date</th>
+                        <th>Schedule Time</th>
+                        <th>Booked Date</th>
+                        <th>Description</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="main_appointment" class="form-body">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-info" id="btnBack">Go Back</button>
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-md-2">
+                    <label for="appointID">Appointment ID</label>
+                </div>
+                <div class="col-md-7">
+                    <input type="text" name="patappointID" id="appointID" class="form-control" value="" disabled />
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-md-2">
+                    <label for="patName">Name</label>
+                </div>
+                <div class="col-md-7">
+                    <input type="text" name="patName" id="patName" class="form-control" value="" disabled />
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-md-2">
+                    <label for="patEmail">Email</label>
+                </div>
+                <div class="col-md-7">
+                    <input type="text" name="patEmail" id="patEmail" class="form-control" value="" disabled />
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-md-2">
+                    <label for="patDOB">Date of Birth</label>
+                </div>
+                <div class="col-md-3">
+                    <input type="text" name="patDOB" id="patDOB" class="form-control" value="" disabled />
+                </div>
+                <div class="col-md-1">
+                    <label for="patAge">Age</label>
+                </div>
+                <div class="col-md-3">
+                    <input type="text" name="patAge" id="patAge" class="form-control" value="" disabled />
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-md-2">
+                    <label for="patBloodgp">Blood Group</label>
+                </div>
+                <div class="col-md-3">
+                    <input type="text" name="patBloodgp" id="patBloodgp" class="form-control" value="" disabled />
+                </div>
+                <div class="col-md-1">
+                    <label for="patGender">Gender</label>
+                </div>
+                <div class="col-md-3">
+                    <input type="text" name="patGender" id="patGender" class="form-control" value="" disabled />
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-md-2">
+                    <label for="patDesc">Description</label>
+                </div>
+                <div class="col-md-7">
+                    <textarea id="patDesc" name="patDesc" class="form-control" rows="3" disabled></textarea>
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-md-2">
+                    <label for="patPrescription">Prescription</label>
+                </div>
+                <div class="col-md-7">
+                    <textarea id="patPrescription" name="patPrescription" class="form-control" rows="3"></textarea>
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-md-2">
+                    <label for="patMedicine">Medicine</label>
+                </div>
+                <div class="col-md-7">
+                    <textarea id="patMedicine" name="patMedicine" class="form-control" rows="3"></textarea>
+                    <span id="err_span" style="font-size: 12px; color: red"></span>
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-md-4 center-block">
+                    <button class="btn btn-primary form-control" type="button" id="btnDoneAppoint" name="btnDoneAppoint">Complete</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+
+        $('#main_appointment').hide();
+
+        $.get('/Doctor/PendingAppoint', function (data) {
+            data = JSON.parse(data);
+            var rows = "";
+    
+            $.each(data.Table, function (i, v1) {
+                var btnCtl = "";
+
+                if (v1.APPOINT_STATUS == "Not Confirmed") {
+                    btnCtl = '<td><button class="btn btn-primary btn-sm" type="button" onclick="confirmBook(' + v1.APPOINT_ID + ')">Confirm </button> <button class="btn btn-danger btn-sm" type="button" title="Cancel Appointment"><i class="fa fa-times"></i></button></td>';
+                }
+                else if (v1.APPOINT_STATUS == "Appointment Pending") {
+                    if (v1.DAYSTOGO == 0) {
+                        btnCtl = '<td><button class="btn btn-success btn-sm" type="button" onclick="performAppointment(' + v1.APPOINT_ID + ')">Check Now </button></td>';
+                    }
+                    else {
+                        btnCtl = '<td><button class="btn btn-warning btn-sm" type="button" onclick="performAppointment(' + v1.APPOINT_ID + ')" disabled>Check Now <span class="badge">' + v1.DAYSTOGO + ' Days</span></button></td>';
+                    }
+                }
+
+                rows += '<tr><td>' + v1.APPOINT_ID + '</td><td>' + v1.PATIENT_NAME + '</td><td>' + v1.SCHEDULE_DATE + '</td><td>' + v1.SCHEDULE_TIME + '</td><td>' + v1.BOOKED_DATE + '</td><td>' + v1.APPOINT_DESC + '</td>' + btnCtl + '</tr>';
+            });
+        
+            $('#myTable tbody').html(rows);
+
+            $('#myTable').DataTable();
+ 
+        });
+    });
+
+    function confirmBook(i) {
+
+        var book = confirm('Do you agree to Confirm the Appointment ?');
+        if (book == true) {
+            $.get('/Doctor/ConfirmBook', { AppointId: i }, function (data) {
+                if (data == 'saved') {
+                    alert('Succesfully confirm the appointment !');
+                    location.reload(true);
+                }
+                else if (data == 'notsaved') {
+                    alert('Problem occurred to confirm the appoinent, Please try again !');
+                }
+                else {
+                    alert('Something went wrong, Please try again !');
+                }
+            });
+
+        }
+    }
+
+    function performAppointment(i) {
+        $('#table_apt').hide('slow');
+
+        $.get('/Doctor/FetchPatDetailsForFinalAppointment', { AppointId: i }, function (data) {
+            data = JSON.parse(data);
+
+            $.each(data.Table, function (i, v1) {
+                $('#appointID').val(v1.APPOINT_ID);
+                $('#patName').val(v1.PATIENT_NAME);
+                $('#patEmail').val(v1.PATIENT_EMAIL);
+                $('#patDOB').val(v1.PATIENT_DOB);
+                $('#patAge').val(v1.AGE);
+                $('#patBloodgp').val(v1.PATIENT_BLOODGP);
+                $('#patGender').val(v1.PATIENT_GENDER);
+                $('#patDesc').val(v1.APPOINT_DESC);
+
+            });
+        });
+
+        $('#main_appointment').show('slow');
+    }
+
+    $('#btnDoneAppoint').click(function () {
+        var valid = true;
+        if ($('#patPrescription').val() == "") {
+            valid = false;
+        }
+        if ($('#patMedicine').val() == "") {
+            valid = false;
+        }
+        if (valid == false) {
+            $('#err_span').text('* Please fill all the fields !');
+        }
+        else {
+            var FinalAppoint = {
+                "appointID": $('#appointID').val(),
+                "patPrescription": $('#patPrescription').val(),
+                "patMedicine": $('#patMedicine').val()
+            };
+
+            $.post('/Doctor/SaveFinalAppointment', FinalAppoint, function (result) {
+                if (result == 'saved') {
+                    swal("Success", "Appointment data successfully saved !", "success");
+                    location.reload(true);
+                }
+                else if (result == 'notSaved') {
+                    swal("Error", "Problem saving the appointment, Please try again", "error");
+                }
+                else {
+                    swal("Error", "Something went wrong, Please try again", "error");
+                }
+            }); 
+        }   
+    });
+
+    $('#btnBack').click(function () {
+        $('#main_appointment').hide('slow');
+        $('#table_apt').show('slow');
+    });
+
+</script>
+
+

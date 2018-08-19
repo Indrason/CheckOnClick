@@ -1,0 +1,189 @@
+﻿
+@{
+    ViewBag.Title = "Any Query";
+    Layout = "~/Views/Shared/_LayoutPatient.cshtml";
+}
+
+
+<div class="form-grids row widget-shadow" data-example-id="basic-forms">
+    <div class="form-title">
+        <h4>My Query</h4>
+
+    </div>
+    <div class="form-body" id="table_query">
+        <div class="table table-responsive">
+            <table id="querytable" class="table">
+                <thead class="bg-info">
+                    <tr>
+                        <th>Query Id</th>
+                        <th>Query Desc</th>
+                        <th>View Reply</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <button type="button" id="askquery" class="btn btn-primary form-control">Ask Query</button>
+            </div>
+        </div>
+    </div>
+    <div class="form-body" id="filequery">
+        <form>
+            <div class="row form-group">
+                <div class="row">
+                    <div class="col-md-2">
+                        <button type="button" class="btn btn-info" id="btnBack">Go Back</button>
+                    </div>
+                </div>
+                <br />
+
+                <div class="row form-group">
+                    <div class="col-md-2"><label for="selectDoc">Select Doctor</label></div>
+                    <div class="col-md-7">
+                        <select id="selectDoc" class="form-control">
+                            <option>-- Select Doctor --</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    <label for="Qname">Name</label>
+                </div>
+                <div class="col-md-7">
+                    <input type="text" id="Qname" name="Qname" class="form-control" placeholder="Your Name" disabled />
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-md-2">
+                    <label for="Qemail">Email</label>
+                </div>
+                <div class="col-md-7">
+                    <input type="email" id="Qemail" name="Qemail" class="form-control" placeholder="Your Email" disabled />
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-md-2">
+                    <label for="Qcontact">Contact</label>
+                </div>
+                <div class="col-md-7">
+                    <input type="text" id="Qcontact" name="Qcontact" class="form-control" placeholder="Your Contact" pattern="[0-9]{10}" />
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-md-2">
+                    <label for="Qquery">Your Query</label>
+                </div>
+                <div class="col-md-7">
+                    <textarea rows="4" id="Qquery" name="Query" class="form-control" placeholder="Your Query..."></textarea>
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-md-4">
+                    <button class="btn btn-primary form-control" type="button" id="btnsubmit"><i class="fa fa-paper-plane"></i> Submit Your Query</button>
+                </div>
+            </div>
+        </form>
+
+
+    </div>
+</div>
+
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $('#filequery').hide();
+        $.get('/Patient/FetchQueryRecord', function (data) {
+            data = JSON.parse(data);
+            var rows = "";
+
+            for (var i = 0; i < data.Table.length; i++) {
+               rows += '<tr><td>' + data.Table[i].QUERY_ID + '</td><td>' + data.Table[i].MESSAGE + '</td><td>' + data.Table[i].REPLY  + '</td></tr>';
+            }
+            $('#querytable tbody').html(rows);
+
+            $('#querytable').DataTable();
+
+           
+        });
+    });
+
+    $.get('/Patient/GetPatientInQuery', function (data) {
+
+        $.each(data, function (i, v1) {
+            $('#Qname').val(v1.Qname);
+            $('#Qemail').val(v1.Qemail);
+            $('#Qcontact').val(v1.Qcontact);
+        });
+    });
+
+    $('#btnsubmit').click(function () {
+
+        var value = true;
+        if ($('#Qcontact').val() == '') {
+            value = false;
+        }
+        if ($('#Qquery').val() == '') {
+            value = false;
+        }
+        if ($('#selectDoc option:selected').val() == '') {
+            value = false;
+        }
+        if (value == false) {
+            swal("Error", "Please Fill Details", "error");
+        }
+        
+        else {
+
+            var SendData = {
+                "Qtarget": $('#selectDoc').val(),
+                "Qname": $('#Qname').val(),
+                "Qemail": $('#Qemail').val(),
+                "Qcontact": $('#Qcontact').val(),
+                "Qquery": $('#Qquery').val()
+            };
+
+            $.post('/Patient/SendQuery', SendData, function (result) {
+                if (result == 'saved') {
+                    swal("Success", "Appointment data successfully saved !", "success");
+                    location.reload(true);
+                }
+                else if (result == 'notSaved') {
+                    swal("Error", "Problem saving the appointment, Please try again", "error");
+                }
+                else {
+                    swal("Error", "Something went wrong, Please try again", "error");
+                }
+            }); 
+
+        }
+    });
+
+
+     $.get("/Patient/FeedbackPat", function (data) {
+        var opt = '<option>-- Select Doctor --</option>';
+        $.each(data, function (i, v1) {
+            opt += '<option value="' + v1.Value + '">' + v1.Text + '</option>';
+        });
+
+        $('#selectDoc').html(opt);
+    });
+
+
+    $('#btnBack').click(function () {
+        $('#filequery').hide('slow');
+        $('#table_query').show('slow');
+    });
+
+    $('#askquery').click(function () {
+        $('#filequery').show('slow');
+        $('#table_query').hide('slow');
+    });
+</script>
